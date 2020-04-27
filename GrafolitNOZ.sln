@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrafolitNOZ", "GrafolitNOZ\GrafolitNOZ.csproj", "{57DE4835-136D-463B-9832-E153EFD40011}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57DE4835-136D-463B-9832-E153EFD40011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57DE4835-136D-463B-9832-E153EFD40011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57DE4835-136D-463B-9832-E153EFD40011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57DE4835-136D-463B-9832-E153EFD40011}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0563B6AA-1535-449F-8BD6-B8439CF29CE8}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.bovianplus.si/tfs/tfscollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = GrafolitNOZ\\GrafolitNOZ.csproj
+		SccProjectName1 = GrafolitNOZ
+		SccLocalPath1 = GrafolitNOZ
+	EndGlobalSection
+EndGlobal

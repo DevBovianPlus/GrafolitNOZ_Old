@@ -1,0 +1,74 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Popup.master.cs" Inherits="GrafolitNOZ.Popup" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title></title>
+
+    <link rel="stylesheet" href="~/Styles/Content.css" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <%--<script src="https://kit.fontawesome.com/e3ad29ce3a.js" crossorigin="anonymous"></script>--%>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+     <link rel="stylesheet" href="~/Styles/smart_wizard.css" />
+     <link rel="stylesheet" href="~/Styles/smart_wizard_theme_arrows.css" />
+     <link rel="stylesheet" href="~/Styles/smart_wizard_theme_dots.css" />
+
+    <%--<script src="~/Scripts/jquery.smartWizard.js"></script>--%>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style="padding-bottom: 0;">
+    <script src='<%= ResolveUrl("~/Scripts/CommonJS.js") %>'></script>
+    <script type="text/javascript" src='<%= ResolveUrl("~/Scripts/jquery.smartWizard.js") %>'></script>
+    <form id="form1" runat="server">
+        <div class="container-fluid no-padding-left no-padding-right p-3">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolderMain" runat="server">
+            </asp:ContentPlaceHolder>
+
+            <dx:ASPxLoadingPanel ID="LoadingPanel" runat="server" ClientInstanceName="LoadingPanel" Text="" Modal="true">
+                <%--<Image Url="../Images/loadingGif.gif" Width="280px"></Image>--%>
+            </dx:ASPxLoadingPanel>
+
+            <!-- Modal -->
+            <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="infoModalTitle"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="infoModalMessage">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zapri</button>
+                            <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <asp:ContentPlaceHolder ID="FooterScriptHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>

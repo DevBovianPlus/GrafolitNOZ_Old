@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<MainMenu>
+  <SuperAdmin>
+    <Group Text="NADZOR" font="bold" align="center" ImageUrl="~/Images/Arrow-right.png">
+      <Link NavigateUrl="~/Home.aspx" Text="Nadzorna plošča" ImageUrl="~/Images/dashboard.png" />
+    </Group>
+    <Group Text="OPTIMALNE ZALOGE" align="center" ImageUrl="~/Images/Arrow-right.png">
+      <Link NavigateUrl="~/Pages/OptimalStockOrder/OptimalStockOrderAdd.aspx?action=1%20recordId=0" Text="Novo naročilo" ImageUrl="~/Images/order.png" />
+      <Link NavigateUrl="~/Pages/OptimalStockOrder/OptimalStockOrderTable.aspx" Text="Pregled naročil" ImageUrl="~/Images/inquiry.png" />
+    </Group>
+    <Group Text="ŠIFRANTI" font="bold" align="center" ImageUrl="~/Images/Arrow-right.png">
+      <Link NavigateUrl="~/Pages/Client/Client.aspx" Text="Dobavitelji" ImageUrl="~/Images/clients.png" />
+      <Link NavigateUrl="~/Pages/Employee/EmployeeTable.aspx" Text="Zaposleni" ImageUrl="~/Images/employee.png" />
+      <Link NavigateUrl="~/Pages/Settings/Admin.aspx" Text="Admin" ImageUrl="~/Images/settings.png" />
+    </Group>
+  </SuperAdmin>
+
+  <Admin>
+    <Group Text="NADZOR" font="bold" align="center" ImageUrl="~/Images/Arrow-right.png">
+      <Link NavigateUrl="~/Home.aspx" Text="Nadzorna plošča" ImageUrl="~/Images/dashboard.png" />
+    </Group>
+    <Group Text="OPTIMALNE ZALOGE" align="center" ImageUrl="~/Images/Arrow-right.png">
+      <Link NavigateUrl="~/Pages/OptimalStockOrder/OptimalStockOrderAdd.aspx?action=1%20recordId=0" Text="Novo naročilo" ImageUrl="~/Images/order.png" />
+      <Link NavigateUrl="~/Pages/OptimalStockOrder/OptimalStockOrderTable.aspx" Text="Pregled naročil" ImageUrl="~/Images/inquiry.png" />
+    </Group>
+    <Group Text="ŠIFRANTI" font="bold" align="center" ImageUrl="~/Images/Arrow-right.png">
+      <Link NavigateUrl="~/Pages/Client/Client.aspx" Text="Dobavitelji" ImageUrl="~/Images/clients.png" />
+      <Link NavigateUrl="~/Pages/Employee/EmployeeTable.aspx" Text="Zaposleni" ImageUrl="~/Images/employee.png" />
+    </Group>
+  </Admin>
+
+  <Leader>
+    <Group Text="NADZOR" font="bold" align="center" ImageUrl="~/Images/Arrow-right.png">
+      <Link NavigateUrl="~/Home.aspx" Text="Nadzorna plošča" ImageUrl="~/Images/dashboard.png" />
+    </Group>
+  </Leader>
+  
+  <User>
+    <Group Text="NADZOR" font="bold" align="center" ImageUrl="~/Images/Arrow-right.png">
+      <Link NavigateUrl="~/Home.aspx" Text="Nadzorna plošča" ImageUrl="~/Images/dashboard.png" />
+    </Group>
+  </User>
+</MainMenu>

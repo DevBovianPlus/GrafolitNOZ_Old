@@ -1,0 +1,206 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="GrafolitNOZ.Main" %>
+
+<%@ Register Assembly="DevExpress.Web.v19.1, Version=19.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+
+    <title></title>
+
+    <link rel="stylesheet" href="~/Styles/MasterPage.css" />
+    <link rel="stylesheet" href="~/Styles/Common.css" />
+    <link rel="stylesheet" href="~/Styles/Content.css" />
+    <link rel="stylesheet" href="~/Styles/DevExpressCustom.css" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/e3ad29ce3a.js" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Styles/smart_wizard.css" />
+    <link rel="stylesheet" href="~/Styles/smart_wizard_theme_arrows.css" />
+    <link rel="stylesheet" href="~/Styles/smart_wizard_theme_dots.css" />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function OpenDropDown() {
+            document.getElementById("myDropDown").classList.toggle("show");
+        }
+        $(document).mouseup(function (e) {
+            // var container = $('.main-menu-section');
+            //var closeMenuBtn = $('.hamburger-wrap-close');
+            ////var hamburgerMenuBtn = $('.hamburger-wrap');
+            //HamburgerMenuCloseOutsideClick(e, container, hamburgerMenuBtn, closeMenuBtn);
+            ShowRemoveDropdownOutsideClick(e, $('.logo'), $('#myDropDown'));
+        });
+
+        $(document).ready(function () {
+
+            setInterval(function () {
+                var redirect = false;
+                var cookieValue = getCookie("UserLastRequest");//preberemo iz cookija kdaj je bil zadnji request narejen
+                var sessionExpres = parseInt(getCookie("SessionExpires"));//preberemo iz cookija koliko časa je dovoljena odprta seja za prijavo
+
+                if (cookieValue == "STOP")
+                    return;
+
+                if (isNaN(sessionExpres))
+                    sessionExpres = 30;
+
+                var split = cookieValue.split(" ");
+                var lastRequestDate = new Date(parseInt(split[2]), parseInt(split[1]) - 1, parseInt(split[0]), parseInt(split[3]), parseInt(split[4]), parseInt(split[5]));
+
+                var newDate = addMinutes(lastRequestDate, sessionExpres);
+
+                var currentDate = new Date();
+
+                if (currentDate.getTime() > newDate.getTime())
+                    window.location.replace(location.origin + "/Home.aspx");
+
+            }, 30000);//30 sec            
+        });
+
+        function addMinutes(date, minutes) {
+            return new Date(date.getTime() + minutes * 60000);
+        }
+    </script>
+    <asp:ContentPlaceHolder ID="HeadContentHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="main" style="background-color: #ECF0F5;">
+    <script src='<%= ResolveUrl("~/Scripts/CommonJS.js") %>'></script>
+    <form id="form1" runat="server">
+        <header id="masterHeader" class="container-fluid" style="background-color: #DCAC96;" runat="server"><%-- #3C8DBC --%>
+            <div class="row" style="padding-top: 5px; padding-bottom: 5px">
+                <div class="col-6">
+
+                    <dx:ASPxHeadline ID="PageHeadline" runat="server" Font-Size="22px" Font-Italic="true" Font-Bold="true" HeaderStyle-ForeColor="#ECF0F5" />
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-10 pr-0 d-flex align-items-center justify-content-end">
+                            <a href="/Pages/UserInfo/UserData.aspx" style="display: block; text-decoration: none; padding-left: 5px;">
+                                <span style="display: block;">
+                                    <dx:ASPxLabel ID="SignedInHelloLabel" runat="server" Text="Pozdravljeni," Font-Size="Smaller" ForeColor="#ECF0F5" meta:resourcekey="SignedInHelloLabelResource1">
+                                    </dx:ASPxLabel>
+                                </span>
+                                <span style="display: block;">
+                                    <dx:ASPxLabel ID="UsernameLabel" runat="server" Text="ASPxLabel" Font-Size="Small" ForeColor="#ECF0F5" CssClass="userNamePosition" meta:resourcekey="UsernameLabelResource1"></dx:ASPxLabel>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-2 no-padding-left">
+                            <div class="dropdown text-left">
+                                <div class="logo dropbtn" onclick="OpenDropDown()">
+                                    <img id="headerProfileImage" runat="server" src="/Images/defaultPerson.png" alt="No profile logo" class="img-circle hoverProfileImage" height="50" width="50" title="Your profile" />
+                                    <div id="myDropDown" class="dropdown-content">
+                                        <div>
+                                            <dx:ASPxLabel ID="SignedInAsLabel" runat="server" Text="Prijavljen si kot: " Font-Size="Smaller" meta:resourcekey="SignedInAsLabelResource1"></dx:ASPxLabel>
+                                            <dx:ASPxLabel ID="UserRoleLabel" runat="server" Text="ASPxLabel" Font-Size="Small" meta:resourcekey="UserRoleLabelResource1"></dx:ASPxLabel>
+                                        </div>
+                                        <div>Verzija: 1.0.0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="container-fluid">
+            <dx:ASPxPanel ID="MainMenuPanel" Width="300px" runat="server" FixedPosition="WindowLeft" FixedPositionOverlap="true" Collapsible="true" CssClass="leftPanel"
+                BackColor="#f5f5f5" ScrollBars="Auto">
+                <SettingsAdaptivity CollapseAtWindowInnerWidth="1500" />
+                <Images>
+                    <ExpandButtonArrowRight Width="37px" Height="37px">
+                    </ExpandButtonArrowRight>
+                </Images>
+                <Styles>
+                    <ExpandBar BackColor="#2A2A2A" Width="42px">
+                    </ExpandBar>
+                    <ExpandedExpandBar BackColor="#2A2A2A">
+                    </ExpandedExpandBar>
+                    <ExpandButton BackColor="#1279c0">
+                    </ExpandButton>
+
+                </Styles>
+                <SettingsCollapsing ExpandEffect="Slide">
+                    <ExpandButton GlyphType="Strips" Position="Far" />
+                </SettingsCollapsing>
+                <Paddings Padding="0px" />
+                <PanelCollection>
+                    <dx:PanelContent runat="server" SupportsDisabledAttribute="True" ID="panelContent">
+                        <div class="row no-margin">
+                            <div class="col-12 text-center small-padding-top small-padding-bottom">
+                                <a href="/Home.aspx">
+                                    <img id="mainImageLogo" runat="server" src="/Images/bovian_logo.png" alt="No company logo" height="48" width="150" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row no-margin">
+                            <div class="col-12">
+                                <asp:XmlDataSource ID="MainMenuDataSource" runat="server" DataFile="~/Navigation/MainMenu.xml" XPath="MainMenu/Group"></asp:XmlDataSource>
+                                <dx:ASPxNavBar ID="NavBarMainMenu" runat="server" DataSourceID="MainMenuDataSource" Theme="iOS" AutoCollapse="false" EncodeHtml="False" AllowSelectItem="True" EnableAnimation="true" Width="100%" BackColor="#f4f5f7"
+                                    EnableHotTrack="true" ShowGroupHeaders="true">
+                                    <ItemTextTemplate>
+                                        <dx:ASPxLabel ID="lblModel" runat="server" Font-Bold="True" Text='<%# Container.EvalDataItem("Text") %>' />
+                                    </ItemTextTemplate>
+                                    <Paddings Padding="0px" />
+                                </dx:ASPxNavBar>
+                            </div>
+                        </div>
+                        <div class="row2 align-content-center text-center large-padding-bottom no-margin" style="position: absolute; bottom: 0; left: 0; right: 0;">
+                            <div class="col-4">
+                                <dx:ASPxButton ID="btnSignOut" runat="server" RenderMode="Link" AutoPostBack="false"
+                                    CssClass="menu-action-button" OnClick="btnSignOut_Click" ToolTip="Odjava">
+                                    <HoverStyle CssClass="menu-action-button-hover" />
+                                    <Image Url="/Images/signOut.png" UrlHottracked="/Images/signOutHover.png" />
+                                </dx:ASPxButton>
+                            </div>
+                            <div class="col-4">
+                                <dx:ASPxButton ID="btnHome" runat="server" RenderMode="Link" AutoPostBack="false"
+                                    CssClass="menu-action-button" ToolTip="Domov">
+                                    <HoverStyle CssClass="menu-action-button-hover" />
+                                    <Image Url="/Images/home.png" UrlHottracked="/Images/homeHover.png" />
+                                    <ClientSideEvents Click="function(s,e){ document.location.href = '/Home.aspx'; }" />
+                                </dx:ASPxButton>
+                            </div>
+                            <div class="col-4">
+                                <dx:ASPxButton ID="btnHelp" runat="server" RenderMode="Link" AutoPostBack="false"
+                                    CssClass="menu-action-button small-top" ToolTip="Domov">
+                                    <HoverStyle CssClass="menu-action-button-hover" />
+                                    <Image Url="/Images/HelpIcon.png" UrlHottracked="/Images/HelpIcon.png" />
+                                    <ClientSideEvents Click="function(s,e){ document.location.href = '/Home.aspx'; }" />
+                                </dx:ASPxButton>
+                            </div>
+                        </div>
+                    </dx:PanelContent>
+                </PanelCollection>
+            </dx:ASPxPanel>
+        </section>
+        <div class="container-fluid">
+            <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+        <dx:ASPxLoadingPanel ID="LoadingPanel" runat="server" ClientInstanceName="LoadingPanel" Modal="true">
+        </dx:ASPxLoadingPanel>
+
+        <footer class="container-fluid main-footer">
+            &copy; BOVIANPLUS
+        </footer>
+    </form>
+    <asp:ContentPlaceHolder ID="FooterScriptHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>

@@ -1,0 +1,406 @@
+11. 04. 2020 09:09:21 Before Authenticate
+11. 04. 2020 09:09:21 Before SignIn
+11. 04. 2020 09:09:35 After SignIn
+11. 04. 2020 09:09:35 After Authenticate
+11. 04. 2020 09:19:36 The operation has timed out System
+11. 04. 2020 09:34:43 Before Authenticate
+11. 04. 2020 09:34:43 Before SignIn
+11. 04. 2020 09:34:44 After SignIn
+11. 04. 2020 09:34:44 After Authenticate
+11. 04. 2020 10:06:07 Before Authenticate
+11. 04. 2020 10:06:07 Before SignIn
+11. 04. 2020 10:06:07 After SignIn
+11. 04. 2020 10:06:07 After Authenticate
+11. 04. 2020 12:08:14 Before Authenticate
+11. 04. 2020 12:08:14 Before SignIn
+11. 04. 2020 12:08:16 After SignIn
+11. 04. 2020 12:08:16 After Authenticate
+11. 04. 2020 12:12:23 The request was aborted: The operation has timed out. System
+11. 04. 2020 13:33:38 Before Authenticate
+11. 04. 2020 13:33:38 Before SignIn
+11. 04. 2020 13:33:39 After SignIn
+11. 04. 2020 13:33:39 After Authenticate
+11. 04. 2020 13:38:29 The request was aborted: The operation has timed out. System
+11. 04. 2020 14:09:07 Before Authenticate
+11. 04. 2020 14:09:07 Before SignIn
+11. 04. 2020 14:09:08 After SignIn
+11. 04. 2020 14:09:08 After Authenticate
+11. 04. 2020 15:29:30 Before Authenticate
+11. 04. 2020 15:29:30 Before SignIn
+11. 04. 2020 15:29:33 After SignIn
+11. 04. 2020 15:29:33 After Authenticate
+13. 04. 2020 09:20:51 Before Authenticate
+13. 04. 2020 09:20:51 Before SignIn
+13. 04. 2020 09:21:05 After SignIn
+13. 04. 2020 09:21:05 After Authenticate
+13. 04. 2020 09:48:27 The operation has timed out System
+13. 04. 2020 10:40:20 Before Authenticate
+13. 04. 2020 10:40:20 Before SignIn
+13. 04. 2020 10:40:22 After SignIn
+13. 04. 2020 10:40:22 After Authenticate
+13. 04. 2020 10:45:40 The request was aborted: The operation has timed out. System
+13. 04. 2020 11:30:43 Before Authenticate
+13. 04. 2020 11:30:43 Before SignIn
+13. 04. 2020 11:30:44 After SignIn
+13. 04. 2020 11:30:44 After Authenticate
+13. 04. 2020 11:33:34 An error occurred while executing the command definition. See the inner exception for details.XML parsing: line 6, character 39, unexpected end of input
+13. 04. 2020 11:51:24 An error occurred while executing the command definition. See the inner exception for details.XML parsing: line 24, character 22, unexpected end of input
+13. 04. 2020 12:06:44 Before Authenticate
+13. 04. 2020 12:06:44 Before SignIn
+13. 04. 2020 12:06:45 After SignIn
+13. 04. 2020 12:06:45 After Authenticate
+13. 04. 2020 12:12:43 PDO Run Procedure _upJM_CreateSupplierOrder error:<br><br>Oddelek 15 - TRANZIT ne obstaja v šifrantu!
+13. 04. 2020 12:20:26 The request was aborted: The operation has timed out. System
+13. 04. 2020 12:32:03 Repository failed to save dataValidation failed for one or more entities. See EntityValidationErrors property for more details.
+13. 04. 2020 12:35:49 Before Authenticate
+13. 04. 2020 12:35:49 Before SignIn
+13. 04. 2020 12:35:50 After SignIn
+13. 04. 2020 12:35:50 After Authenticate
+13. 04. 2020 12:39:42 The request was aborted: The operation has timed out. System
+13. 04. 2020 13:22:57 Before Authenticate
+13. 04. 2020 13:22:57 Before SignIn
+13. 04. 2020 13:22:59 After SignIn
+13. 04. 2020 13:22:59 After Authenticate
+14. 04. 2020 00:06:14 Before Authenticate
+14. 04. 2020 00:06:14 Before SignIn
+14. 04. 2020 00:06:16 After SignIn
+14. 04. 2020 00:06:16 After Authenticate
+14. 04. 2020 01:42:37 Before Authenticate
+14. 04. 2020 01:42:37 Before SignIn
+14. 04. 2020 01:42:37 After SignIn
+14. 04. 2020 01:42:37 After Authenticate
+15. 04. 2020 01:01:37 Before Authenticate
+15. 04. 2020 01:01:37 Before SignIn
+15. 04. 2020 01:02:04 After SignIn
+15. 04. 2020 01:02:04 The underlying provider failed on Open.
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)The network path was not found
+
+15. 04. 2020 01:02:04 
+15. 04. 2020 01:02:04 The underlying provider failed on Open.
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)The network path was not found
+ 
+15. 04. 2020 01:03:10 Before Authenticate
+15. 04. 2020 01:03:10 Before SignIn
+15. 04. 2020 01:03:22 After SignIn
+15. 04. 2020 01:03:22 After Authenticate
+15. 04. 2020 01:10:18 The remote server returned an error: (404) Not Found. System
+15. 04. 2020 01:10:25 The remote server returned an error: (404) Not Found. System
+15. 04. 2020 01:19:23 The remote server returned an error: (404) Not Found. System
+15. 04. 2020 08:52:34 Before Authenticate
+15. 04. 2020 08:52:34 Before SignIn
+15. 04. 2020 08:52:39 After SignIn
+15. 04. 2020 08:52:39 After Authenticate
+16. 04. 2020 07:37:53 Before Authenticate
+16. 04. 2020 07:37:53 Before SignIn
+16. 04. 2020 07:37:54 After SignIn
+16. 04. 2020 07:37:54 After Authenticate
+16. 04. 2020 10:58:53 Before Authenticate
+16. 04. 2020 10:58:53 Before SignIn
+16. 04. 2020 10:59:03 After SignIn
+16. 04. 2020 10:59:03 Napačna prijava! Ponovno vnesi geslo in uporabniško ime!
+
+16. 04. 2020 10:59:03 
+16. 04. 2020 10:59:03 Napačna prijava! Ponovno vnesi geslo in uporabniško ime!
+ 
+16. 04. 2020 10:59:08 Before Authenticate
+16. 04. 2020 10:59:08 Before SignIn
+16. 04. 2020 10:59:08 After SignIn
+16. 04. 2020 10:59:08 After Authenticate
+16. 04. 2020 20:51:08 Before Authenticate
+16. 04. 2020 20:51:08 Before SignIn
+16. 04. 2020 20:51:13 After SignIn
+16. 04. 2020 20:51:13 After Authenticate
+16. 04. 2020 22:05:42 Before Authenticate
+16. 04. 2020 22:05:43 Before SignIn
+16. 04. 2020 22:05:43 After SignIn
+16. 04. 2020 22:05:43 After Authenticate
+16. 04. 2020 22:54:06 Before Authenticate
+16. 04. 2020 22:54:06 Before SignIn
+16. 04. 2020 22:54:08 After SignIn
+16. 04. 2020 22:54:08 After Authenticate
+17. 04. 2020 08:19:15 Before Authenticate
+17. 04. 2020 08:19:15 Before SignIn
+17. 04. 2020 08:19:18 After SignIn
+17. 04. 2020 08:19:18 After Authenticate
+17. 04. 2020 08:20:20 Get products for selected optimal stock error!An error occurred while executing the command definition. See the inner exception for details.Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.The wait operation timed out
+17. 04. 2020 08:21:14 Get products for selected optimal stock error!An error occurred while executing the command definition. See the inner exception for details.Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.The wait operation timed out
+17. 04. 2020 08:23:33 Get products for selected optimal stock error!An error occurred while executing the command definition. See the inner exception for details.Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.The wait operation timed out
+17. 04. 2020 08:27:54 The operation has timed out System
+17. 04. 2020 09:39:13 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+17. 04. 2020 09:42:32 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+17. 04. 2020 09:44:50 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+17. 04. 2020 09:45:58 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+17. 04. 2020 09:48:22 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+17. 04. 2020 09:50:35 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+17. 04. 2020 09:51:43 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+17. 04. 2020 09:52:43 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+17. 04. 2020 09:54:45 Before Authenticate
+17. 04. 2020 09:54:45 Before SignIn
+17. 04. 2020 09:54:45 After SignIn
+17. 04. 2020 09:54:45 After Authenticate
+18. 04. 2020 07:52:36 Before Authenticate
+18. 04. 2020 07:52:36 Before SignIn
+18. 04. 2020 07:52:41 After SignIn
+18. 04. 2020 07:52:41 After Authenticate
+18. 04. 2020 07:56:04 The operation has timed out System
+18. 04. 2020 08:05:41 The request was aborted: The operation has timed out. System
+18. 04. 2020 08:08:45 The request was aborted: The operation has timed out. System
+18. 04. 2020 09:11:26 Before Authenticate
+18. 04. 2020 09:11:26 Before SignIn
+18. 04. 2020 09:11:26 After SignIn
+18. 04. 2020 09:11:26 After Authenticate
+18. 04. 2020 09:17:53 The operation has timed out System
+18. 04. 2020 11:52:00 Before Authenticate
+18. 04. 2020 11:52:00 Before SignIn
+18. 04. 2020 11:52:07 After SignIn
+18. 04. 2020 11:52:07 After Authenticate
+18. 04. 2020 11:55:26 The request was aborted: The operation has timed out. System
+18. 04. 2020 12:07:00 The request was aborted: The operation has timed out. System
+18. 04. 2020 12:12:13 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 12:15:03 The operation has timed out System
+18. 04. 2020 12:19:49 The request was aborted: The operation has timed out. System
+18. 04. 2020 16:26:58 Before Authenticate
+18. 04. 2020 16:26:58 Before SignIn
+18. 04. 2020 16:27:00 After SignIn
+18. 04. 2020 16:27:00 After Authenticate
+18. 04. 2020 16:28:57 The request was aborted: The operation has timed out. System
+18. 04. 2020 16:59:31 Before Authenticate
+18. 04. 2020 16:59:32 Before SignIn
+18. 04. 2020 16:59:32 After SignIn
+18. 04. 2020 16:59:32 After Authenticate
+18. 04. 2020 16:59:47 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 17:05:53 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 17:06:34 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 17:08:17 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 17:10:00 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 17:10:41 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 17:13:32 The request was aborted: The operation has timed out. System
+18. 04. 2020 17:17:21 The operation has timed out System
+18. 04. 2020 17:19:22 The request was aborted: The operation has timed out. System
+18. 04. 2020 18:00:31 Before Authenticate
+18. 04. 2020 18:00:31 Before SignIn
+18. 04. 2020 18:00:32 After SignIn
+18. 04. 2020 18:00:32 After Authenticate
+18. 04. 2020 19:44:42 Before Authenticate
+18. 04. 2020 19:44:42 Before SignIn
+18. 04. 2020 19:44:48 After SignIn
+18. 04. 2020 19:44:48 After Authenticate
+18. 04. 2020 21:48:17 Before Authenticate
+18. 04. 2020 21:48:17 Before SignIn
+18. 04. 2020 21:48:24 After SignIn
+18. 04. 2020 21:48:24 After Authenticate
+18. 04. 2020 21:49:25 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 21:51:29 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+18. 04. 2020 21:56:45 The request was aborted: The operation has timed out. System
+19. 04. 2020 11:09:02 Before Authenticate
+19. 04. 2020 11:09:02 Before SignIn
+19. 04. 2020 11:09:05 After SignIn
+19. 04. 2020 11:09:05 After Authenticate
+19. 04. 2020 15:24:32 Before Authenticate
+19. 04. 2020 15:24:32 Before SignIn
+19. 04. 2020 15:24:44 After SignIn
+19. 04. 2020 15:24:44 After Authenticate
+19. 04. 2020 15:25:55 Get products for selected optimal stock error!An error occurred while executing the command definition. See the inner exception for details.Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.The wait operation timed out
+19. 04. 2020 15:55:17 Before Authenticate
+19. 04. 2020 15:55:17 Before SignIn
+19. 04. 2020 15:55:18 After SignIn
+19. 04. 2020 15:55:18 After Authenticate
+19. 04. 2020 15:57:05 The operation has timed out System
+19. 04. 2020 15:59:39 The request was aborted: The operation has timed out. System
+19. 04. 2020 17:01:23 Before Authenticate
+19. 04. 2020 17:01:23 Before SignIn
+19. 04. 2020 17:01:25 After SignIn
+19. 04. 2020 17:01:25 After Authenticate
+19. 04. 2020 18:32:47 Before Authenticate
+19. 04. 2020 18:32:47 Before SignIn
+19. 04. 2020 18:32:49 After SignIn
+19. 04. 2020 18:32:49 After Authenticate
+19. 04. 2020 19:20:38 Get products for selected optimal stock error!Sequence contains no elements
+19. 04. 2020 19:21:23 Get products for selected optimal stock error!Sequence contains no elements
+19. 04. 2020 19:22:54 Get products for selected optimal stock error!Sequence contains no elements
+19. 04. 2020 19:24:06 Get products for selected optimal stock error!Sequence contains no elements
+19. 04. 2020 19:25:55 Get products for selected optimal stock error!Sequence contains no elements
+19. 04. 2020 20:13:26 Before Authenticate
+19. 04. 2020 20:13:26 Before SignIn
+19. 04. 2020 20:13:26 After SignIn
+19. 04. 2020 20:13:26 After Authenticate
+19. 04. 2020 20:21:04 The operation has timed out System
+20. 04. 2020 07:22:57 Before Authenticate
+20. 04. 2020 07:22:57 Before SignIn
+20. 04. 2020 07:23:24 After SignIn
+20. 04. 2020 07:23:24 The underlying provider failed on Open.
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)The network path was not found
+
+20. 04. 2020 07:23:24 
+20. 04. 2020 07:23:24 The underlying provider failed on Open.
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)The network path was not found
+ 
+20. 04. 2020 07:25:08 Before Authenticate
+20. 04. 2020 07:25:08 Before SignIn
+20. 04. 2020 07:25:31 After SignIn
+20. 04. 2020 07:25:31 The underlying provider failed on Open.
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)The network path was not found
+
+20. 04. 2020 07:25:31 
+20. 04. 2020 07:25:31 The underlying provider failed on Open.
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)The network path was not found
+ 
+20. 04. 2020 07:25:47 Before Authenticate
+20. 04. 2020 07:25:47 Before SignIn
+20. 04. 2020 07:25:47 After SignIn
+20. 04. 2020 07:25:47 After Authenticate
+20. 04. 2020 07:29:12 Get products for selected optimal stock error!An error occurred while executing the command definition. See the inner exception for details.Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.The wait operation timed out
+20. 04. 2020 07:32:49 Get products for selected optimal stock error!An error occurred while executing the command definition. See the inner exception for details.Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.The wait operation timed out
+20. 04. 2020 07:34:38 Get products for selected optimal stock error!An error occurred while executing the command definition. See the inner exception for details.Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.The wait operation timed out
+20. 04. 2020 07:35:24 Get products for selected optimal stock error!An error occurred while executing the command definition. See the inner exception for details.Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.The wait operation timed out
+20. 04. 2020 08:48:02 Before Authenticate
+20. 04. 2020 08:48:02 Before SignIn
+20. 04. 2020 08:48:09 After SignIn
+20. 04. 2020 08:48:09 After Authenticate
+20. 04. 2020 09:26:18 The operation has timed out System
+20. 04. 2020 09:33:05 The request was aborted: The operation has timed out. System
+20. 04. 2020 22:45:35 Before Authenticate
+20. 04. 2020 22:45:35 Before SignIn
+20. 04. 2020 22:45:36 After SignIn
+20. 04. 2020 22:45:36 After Authenticate
+20. 04. 2020 22:59:09 The request was aborted: The operation has timed out. System
+20. 04. 2020 23:02:24 The operation has timed out System
+21. 04. 2020 00:15:57 Before Authenticate
+21. 04. 2020 00:15:57 Before SignIn
+21. 04. 2020 00:15:59 After SignIn
+21. 04. 2020 00:15:59 After Authenticate
+21. 04. 2020 08:40:00 Before Authenticate
+21. 04. 2020 08:40:00 Before SignIn
+21. 04. 2020 08:40:05 After SignIn
+21. 04. 2020 08:40:05 After Authenticate
+21. 04. 2020 09:16:02 Before Authenticate
+21. 04. 2020 09:16:03 Before SignIn
+21. 04. 2020 09:16:04 After SignIn
+21. 04. 2020 09:16:04 After Authenticate
+21. 04. 2020 09:57:16 Before Authenticate
+21. 04. 2020 09:57:16 Before SignIn
+21. 04. 2020 09:57:18 After SignIn
+21. 04. 2020 09:57:18 After Authenticate
+21. 04. 2020 10:35:29 The operation has timed out System
+21. 04. 2020 10:44:26 The request was aborted: The operation has timed out. System
+21. 04. 2020 11:24:31 The operation has timed out System
+21. 04. 2020 16:24:12 Before Authenticate
+21. 04. 2020 16:24:12 Before SignIn
+21. 04. 2020 16:24:15 After SignIn
+21. 04. 2020 16:24:15 After Authenticate
+21. 04. 2020 16:30:32 The operation has timed out System
+21. 04. 2020 17:11:27 Before Authenticate
+21. 04. 2020 17:11:27 Before SignIn
+21. 04. 2020 17:11:28 After SignIn
+21. 04. 2020 17:11:28 After Authenticate
+21. 04. 2020 17:14:03 The request was aborted: The operation has timed out. System
+21. 04. 2020 20:08:34 Before Authenticate
+21. 04. 2020 20:08:34 Before SignIn
+21. 04. 2020 20:08:34 After SignIn
+21. 04. 2020 20:08:34 After Authenticate
+23. 04. 2020 09:26:03 Before Authenticate
+23. 04. 2020 09:26:03 Before SignIn
+23. 04. 2020 09:26:05 After SignIn
+23. 04. 2020 09:26:05 After Authenticate
+23. 04. 2020 11:21:30 Before Authenticate
+23. 04. 2020 11:21:30 Before SignIn
+23. 04. 2020 11:21:31 After SignIn
+23. 04. 2020 11:21:31 After Authenticate
+23. 04. 2020 16:14:18 Before Authenticate
+23. 04. 2020 16:14:18 Before SignIn
+23. 04. 2020 16:14:20 After SignIn
+23. 04. 2020 16:14:20 After Authenticate
+24. 04. 2020 10:06:05 Before Authenticate
+24. 04. 2020 10:06:06 Before SignIn
+24. 04. 2020 10:06:10 After SignIn
+24. 04. 2020 10:06:10 After Authenticate
+24. 04. 2020 10:26:14 Before Authenticate
+24. 04. 2020 10:26:14 Before SignIn
+24. 04. 2020 10:26:15 After SignIn
+24. 04. 2020 10:26:15 After Authenticate
+24. 04. 2020 10:32:08 The operation has timed out System
+25. 04. 2020 08:41:35 Before Authenticate
+25. 04. 2020 08:41:36 Before SignIn
+25. 04. 2020 08:41:44 After SignIn
+25. 04. 2020 08:41:44 Schema specified is not valid. Errors: 
+The mapping of CLR type to EDM type is ambiguous because multiple CLR types match the EDM type 'GetPantheonUsers_Result'. Previously found CLR type 'DatabaseWebService.DomainPDO.GetPantheonUsers_Result', newly found CLR type 'DatabaseWebService.DomainNOZ.GetPantheonUsers_Result'.
+
+25. 04. 2020 08:41:44 
+25. 04. 2020 08:41:44 Schema specified is not valid. Errors: 
+The mapping of CLR type to EDM type is ambiguous because multiple CLR types match the EDM type 'GetPantheonUsers_Result'. Previously found CLR type 'DatabaseWebService.DomainPDO.GetPantheonUsers_Result', newly found CLR type 'DatabaseWebService.DomainNOZ.GetPantheonUsers_Result'.
+ 
+25. 04. 2020 08:45:34 Before Authenticate
+25. 04. 2020 08:45:34 Before SignIn
+25. 04. 2020 08:45:36 After SignIn
+25. 04. 2020 08:45:36 Schema specified is not valid. Errors: 
+The mapping of CLR type to EDM type is ambiguous because multiple CLR types match the EDM type 'GetPantheonUsers_Result'. Previously found CLR type 'DatabaseWebService.DomainPDO.GetPantheonUsers_Result', newly found CLR type 'DatabaseWebService.DomainNOZ.GetPantheonUsers_Result'.
+
+25. 04. 2020 08:45:36 
+25. 04. 2020 08:45:36 Schema specified is not valid. Errors: 
+The mapping of CLR type to EDM type is ambiguous because multiple CLR types match the EDM type 'GetPantheonUsers_Result'. Previously found CLR type 'DatabaseWebService.DomainPDO.GetPantheonUsers_Result', newly found CLR type 'DatabaseWebService.DomainNOZ.GetPantheonUsers_Result'.
+ 
+25. 04. 2020 08:54:16 Before Authenticate
+25. 04. 2020 08:54:16 Before SignIn
+25. 04. 2020 08:54:17 After SignIn
+25. 04. 2020 08:54:17 After Authenticate
+25. 04. 2020 09:04:02 Before Authenticate
+25. 04. 2020 09:04:02 Before SignIn
+25. 04. 2020 09:04:02 After SignIn
+25. 04. 2020 09:04:02 After Authenticate
+25. 04. 2020 09:30:01 Before Authenticate
+25. 04. 2020 09:30:01 Before SignIn
+25. 04. 2020 09:30:02 After SignIn
+25. 04. 2020 09:30:02 After Authenticate
+25. 04. 2020 13:50:02 Before Authenticate
+25. 04. 2020 13:50:02 Before SignIn
+25. 04. 2020 13:50:06 After SignIn
+25. 04. 2020 13:50:06 After Authenticate
+25. 04. 2020 13:55:18 The operation has timed out System
+26. 04. 2020 10:40:55 Before Authenticate
+26. 04. 2020 10:40:55 Before SignIn
+26. 04. 2020 10:40:57 After SignIn
+26. 04. 2020 10:40:57 After Authenticate
+26. 04. 2020 10:43:18 The operation has timed out System
+27. 04. 2020 07:38:37 Before Authenticate
+27. 04. 2020 07:38:37 Before SignIn
+27. 04. 2020 07:38:45 After SignIn
+27. 04. 2020 07:38:45 After Authenticate
+27. 04. 2020 08:26:28 Before Authenticate
+27. 04. 2020 08:26:29 Before SignIn
+27. 04. 2020 08:26:41 After SignIn
+27. 04. 2020 08:26:41 After Authenticate
+27. 04. 2020 10:03:50 Before Authenticate
+27. 04. 2020 10:03:50 Before SignIn
+27. 04. 2020 10:03:56 After SignIn
+27. 04. 2020 10:03:56 After Authenticate
+27. 04. 2020 11:18:37 The request was aborted: The operation has timed out. System
+27. 04. 2020 11:31:12 The request was aborted: The operation has timed out. System
+27. 04. 2020 11:36:16 The request was aborted: The operation has timed out. System
+27/04/2020 17:52:49 Before Authenticate
+27/04/2020 17:52:49 Before SignIn
+27/04/2020 17:52:49 After SignIn
+27/04/2020 17:52:49 
+27/04/2020 17:52:49 The remote server returned an error: (500) Internal Server Error. 
+System
+27/04/2020 17:52:49  The remote server returned an error: (500) Internal Server Error. 
+System
+27/04/2020 17:53:57 Before Authenticate
+27/04/2020 17:53:57 Before SignIn
+27/04/2020 17:53:57 After SignIn
+27/04/2020 17:53:57 
+27/04/2020 17:53:57 The remote server returned an error: (500) Internal Server Error. 
+System
+27/04/2020 17:53:57  The remote server returned an error: (500) Internal Server Error. 
+System
+27/04/2020 17:54:28 Before Authenticate
+27/04/2020 17:54:33 Before SignIn
+27/04/2020 17:58:54 After SignIn
+27/04/2020 17:58:54 
+27/04/2020 17:58:54 The remote server returned an error: (500) Internal Server Error. 
+System
+27/04/2020 17:58:54  The remote server returned an error: (500) Internal Server Error. 
+System
+27/04/2020 18:01:01 Before Authenticate
+27/04/2020 18:01:06 Before SignIn
+27/04/2020 18:01:07 After SignIn
+27/04/2020 18:01:10 After Authenticate
