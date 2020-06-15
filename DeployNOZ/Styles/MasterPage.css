@@ -1,0 +1,125 @@
+﻿html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body.main {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    margin: 0;
+    padding-bottom: 6rem;
+    min-height: 100%;
+/*    background-color:#ECF0F5;*/
+}
+
+.main-header {
+    background-color: #EEF1F4;
+    padding: 8px 15px 8px 15px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.main-footer {
+    text-align: center;
+    color: #FFFFFF;
+    padding: 10px;
+    background-color: #666;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /*padding: 1rem;*/
+}
+
+.logo {
+    display: inline-block;
+    margin-left: 7%;
+    margin-top: 5px;
+    float: left;
+}
+
+    .logo img {
+        margin-left: 3px;
+    }
+
+.header-links {
+    overflow: hidden;
+    float: right;
+    width: 12%;
+    margin-right: 4%;
+}
+
+.users-info {
+    clear: left;
+    border-top: solid 1px #ffffff;
+    padding: 10px 0 10px 0;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+}
+
+.users-info-right {
+    float: right;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: -170px;
+}
+
+    .dropdown-content div {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-content div:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+
+
+.leftPanel {
+    width: 16%;
+}
+
+@media only screen and (max-width: 480px) {
+}
+
+@media only screen and (max-width: 1024px) {
+    .leftPanel {
+        width: auto;
+    }
+}
+
+.row2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:  flex;
+  flex-wrap: wrap;
+}
+.row2 > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-action-button-hover {
+   background-color:#ECF0F5 !important;
+   border-radius:5px !important;
+}
+.menu-action-button {
+   border: 1px solid transparent !important;
+}
+

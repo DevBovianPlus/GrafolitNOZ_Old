@@ -413,7 +413,7 @@
                                                 <div class="col-0 p-0" style="margin-right: 15px;">
                                                     <dx:ASPxLabel ID="ASPxLabel9" runat="server" Text="DOBAVITELJ : " Font-Size="12px"></dx:ASPxLabel>
                                                 </div>
-                                                <div class="col-4 p-0 mr-3">
+                                                <div class="col-6 p-0 mr-3">
                                                     <dx:ASPxGridLookup ID="GridLookupSupplier" runat="server" ClientInstanceName="lookUpSupplier"
                                                         KeyFieldName="TempID" TextFormatString="{0}" CssClass="text-box-input"
                                                         Paddings-PaddingTop="0" Paddings-PaddingBottom="0" Width="100%" Font-Size="13px"
@@ -447,8 +447,6 @@
 
                                                         </Columns>
                                                     </dx:ASPxGridLookup>
-                                                </div>
-                                                <div class="col-4 p-0 mr-3">
                                                     <dx:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="false" ClientInstanceName="btnSearch"
                                                         Height="25" Width="50" UseSubmitBehavior="false" ClientEnabled="true">
                                                         <Paddings Padding="0" />
@@ -456,7 +454,7 @@
                                                         <ClientSideEvents Click="btnSearch_Click" />
                                                     </dx:ASPxButton>
                                                 </div>
-
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-6 mb-2 mb-lg-0 text-right">
@@ -513,7 +511,7 @@
                                         CloseAction="CloseButton" Width="800px" Height="635px" PopupHorizontalAlign="WindowCenter"
                                         PopupVerticalAlign="WindowCenter" PopupAnimationType="Fade" AllowDragging="true" ShowSizeGrip="true"
                                         AllowResize="true" ShowShadow="true"
-                                        OnWindowCallback="PopupControlSearchSupplier_WindowCallback">
+                                        OnWindowCallback="PopupControlSearchSupplier_WindowCallback">                                        
                                         <ContentStyle BackColor="#F7F7F7">
                                             <Paddings PaddingBottom="0px" PaddingLeft="0px" PaddingRight="0px" PaddingTop="0px"></Paddings>
                                         </ContentStyle>
