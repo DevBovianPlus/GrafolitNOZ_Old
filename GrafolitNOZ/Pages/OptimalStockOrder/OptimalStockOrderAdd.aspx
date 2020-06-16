@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="Kreiraj naročilo" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OptimalStockOrderAdd.aspx.cs" Inherits="GrafolitNOZ.Pages.OptimalStockOrder.OptimalStockOrderAdd" %>
 
-<%@ Register Assembly="DevExpress.Web.ASPxTreeList.v19.2, Version=19.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxTreeList" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.ASPxTreeList.v19.2, Version=19.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxTreeList" TagPrefix="dx" %>
 
 <%@ MasterType VirtualPath="~/Main.Master" %>
 

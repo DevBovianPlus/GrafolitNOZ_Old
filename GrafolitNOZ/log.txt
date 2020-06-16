@@ -420,3 +420,7 @@ System
 15. 06. 2020 07:28:56 Before SignIn
 15. 06. 2020 07:29:05 After SignIn
 15. 06. 2020 07:29:06 After Authenticate
+16. 06. 2020 16:22:08 Before Authenticate
+16. 06. 2020 16:22:08 Before SignIn
+16. 06. 2020 16:22:44 After SignIn
+16. 06. 2020 16:22:44 After Authenticate
