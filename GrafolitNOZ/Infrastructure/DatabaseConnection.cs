@@ -23,6 +23,7 @@ using DatabaseWebService.ModelsPDO.Settings;
 using DatabaseWebService.Models.Employee;
 using DatabaseWebService.ModelsNOZ.OptimalStockOrder;
 using DatabaseWebService.ModelsNOZ;
+using DatabaseWebService.ModelsNOZ.Settings;
 
 namespace GrafolitNOZ.Infrastructure
 {
@@ -780,6 +781,23 @@ namespace GrafolitNOZ.Infrastructure
             return model;
         }
 
+        public WebResponseContentModel<hlpOptimalStockOrderModel> UpdateSubCategoriesWithProductsForSelectedNodes(string color, hlpOptimalStockOrderModel newData)
+        {
+            WebResponseContentModel<hlpOptimalStockOrderModel> model = new WebResponseContentModel<hlpOptimalStockOrderModel>();
+
+            try
+            {
+                model.Content = newData;
+                model = PostWebRequestData<WebResponseContentModel<hlpOptimalStockOrderModel>>(WebServiceHelper.UpdateSubCategoriesWithProductsForSelectedNodes(color), "post", model);
+            }
+            catch (Exception ex)
+            {
+                model.ValidationErrorAppSide = ConcatenateExceptionMessage(ex);
+            }
+
+            return model;
+        }
+
         public WebResponseContentModel<List<OptimalStockOrderStatusModel>> GetOptimalStockStatuses()
         {
             WebResponseContentModel<List<OptimalStockOrderStatusModel>> dt = new WebResponseContentModel<List<OptimalStockOrderStatusModel>>();
@@ -825,9 +843,42 @@ namespace GrafolitNOZ.Infrastructure
 
             return model;
         }
+
+        public WebResponseContentModel<CreateNewCodeMailModel> CreateEmailForUserCreateNewCodeForProduct(CreateNewCodeMailModel newData)
+        {
+            WebResponseContentModel<CreateNewCodeMailModel> model = new WebResponseContentModel<CreateNewCodeMailModel>();
+
+            try
+            {
+                model.Content = newData;
+                model = PostWebRequestData<WebResponseContentModel<CreateNewCodeMailModel>>(WebServiceHelper.CreateEmailForUserCreateNewCodeForProduct(), "post", model);
+            }
+            catch (Exception ex)
+            {
+                model.ValidationErrorAppSide = ConcatenateExceptionMessage(ex);
+            }
+
+            return model;
+        }
         #endregion
 
         #region Settings
+
+        public WebResponseContentModel<List<NOZEmailModel>> GetAllEmailsNOZ()
+        {
+            WebResponseContentModel<List<NOZEmailModel>> dt = new WebResponseContentModel<List<NOZEmailModel>>();
+            try
+            {
+                dt = GetResponseFromWebRequest<WebResponseContentModel<List<NOZEmailModel>>>(WebServiceHelper.GetAllEmailsNOZ(), "get");
+            }
+            catch (Exception ex)
+            {
+                dt.ValidationErrorAppSide = ConcatenateExceptionMessage(ex);
+            }
+
+            return dt;
+        }
+
 
         public WebResponseContentModel<SettingsModel> GetSettings()
         {

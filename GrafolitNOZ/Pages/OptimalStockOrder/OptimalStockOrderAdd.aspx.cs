@@ -1,4 +1,5 @@
 ﻿using DatabaseWebService.Models.Client;
+using DatabaseWebService.ModelsNOZ;
 using DatabaseWebService.ModelsNOZ.OptimalStockOrder;
 using DevExpress.Web;
 using DevExpress.Web.ASPxTreeList;
@@ -26,6 +27,9 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
         bool categoryChanged;
         bool filterProductsBySupplier;
 
+        bool deleteSession;
+        bool bHasSubSupplier = false;
+
         protected void Page_Init(object sender, EventArgs e)
         {
             this.Master.PageHeadlineTitle = this.Title;
@@ -41,6 +45,15 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
             ASPxWebControl item = (ASPxWebControl)TreeListOptimalStockWithProducts;
             item.EncodeHtml = false;
+
+            if (Request.QueryString[Enums.QueryStringName.addNew.ToString()] != null)
+                deleteSession = CommonMethods.ParseBool(Request.QueryString[Enums.QueryStringName.addNew.ToString()].ToString());
+
+            if (deleteSession && !SessionHasValue(Enums.OptimalStockOrderSession.DeleteSessionOnFirstLoadFromMenu))
+            {
+                ClearAllSessions(Enum.GetValues(typeof(Enums.OptimalStockOrderSession)).Cast<Enums.OptimalStockOrderSession>().ToList());
+                AddValueToSession(Enums.OptimalStockOrderSession.DeleteSessionOnFirstLoadFromMenu, "Deleted");
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -52,10 +65,10 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
             TreeListOptimalStock.DataBind();
             TreeListOptimalStockWithProducts.DataBind();
-            GridLookupSupplier.GridView.HtmlRowPrepared += new ASPxGridViewTableRowEventHandler(GridLookupSupplier_HtmlRowPrepared);            
+            GridLookupSupplier.GridView.HtmlRowPrepared += new ASPxGridViewTableRowEventHandler(GridLookupSupplier_HtmlRowPrepared);
         }
 
-       
+
 
         private void Initialize()
         {
@@ -79,7 +92,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
             {
                 model = GetOptimalStockOrderDataProvider().GetOptimalStockOrderModel();
             }
-
+            if (GridLookupSupplierAlter.Text.Length > 0) model.StrankaID = CheckModelValidation(GetDatabaseConnectionInstance().GetClientByNameOrInsert(GridLookupSupplierAlter.Text.Trim()));
             model.DatumOddaje = DateEditSubmitOrder.Date.Equals(DateTime.MinValue) ? DateTime.Now : DateEditSubmitOrder.Date;
             model.Kolicina = GetOptimalStockOrderDataProvider().GetOptimalStockOrderModel().NarociloOptimalnihZalogPozicija.Sum(l => l.Kolicina);
             model.NarociloOddal = PrincipalHelper.GetUserPrincipal().ID;
@@ -166,6 +179,10 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                 category = GridLookupCategory.Text;
                 GridLookupColor.DataBind();
                 categoryChanged = true;
+                GetOptimalStockOrderDataProvider().SetOptimalStockTreeHierarchyWithProductsFilterBySupplier(null);
+                GetOptimalStockOrderDataProvider().SetOptimalStockTreeHierarchyWithProductsNoSupplier(null);
+                GetOptimalStockOrderDataProvider().SetOptimalStockTreeHierarchyWithProducts(null);
+                GridLookupSupplier.Text = "";
                 TreeListOptimalStock.UnselectAll();
                 TreeListOptimalStock.DataBind();
             }
@@ -215,6 +232,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
         }
 
         protected void TreeListOptimalStock_DataBinding(object sender, EventArgs e)
+
         {
             var list = GetOptimalStockOrderDataProvider().GetOptimalStockTreeHierarchy();
 
@@ -228,9 +246,14 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
         protected void TreeListOptimalStock_DataBound(object sender, EventArgs e)
         {
+
             TreeListOptimalStock.ExpandAll();
 
+            if (!String.IsNullOrEmpty(TreeListOptimalStock.FilterExpression))
+                TreeListOptimalStock.UnselectAll();
+
             ASPxTreeList list = sender as ASPxTreeList;
+
             if (list.GetSelectedNodes().Count <= 0 && list.Nodes.Count > 0)
             {
                 for (int i = 0; i < list.Nodes.Count; i++)
@@ -291,9 +314,13 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                 {
                     GetOptimalStockOrderDataProvider().SetSupplierList(hlpReturn.Suppliers);
                     GetOptimalStockOrderDataProvider().SetOptimalStockTreeHierarchyWithProducts(hlpReturn.SubCategoryWithProducts);
+
+                    // preverimo ali je kateri
+
                 }
                 TreeListOptimalStockWithProducts.DataBind();
                 GridLookupSupplier.DataBind();
+                GridLookupSupplier.Text = "";
             }
             else if (e.Parameter.Contains("FilterProductsBySupplier"))
             {
@@ -304,7 +331,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
                 var selectedNodes = TreeListOptimalStockWithProducts.GetSelectedNodes();
 
-                // da obdržimo stare podatje za prikaz brez dobavitelja
+                // da obdržimo stare podatke za prikaz brez dobavitelja
                 List<OptimalStockTreeHierarchy> filteredTreeList = new List<OptimalStockTreeHierarchy>();
                 filteredTreeList = CommonMethods.DeepCopy(treeList);
 
@@ -312,7 +339,21 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                 {
                     hlpOptimalStockOrderModel hlp = new hlpOptimalStockOrderModel();
                     hlp.SubCategoryWithProducts = FilterTreeHierarchy(selectedNodes, filteredTreeList);
-                    var hlpReturn = CheckModelValidation(GetDatabaseConnectionInstance().GetProductsForSelectedOptimalStock(GridLookupColor.Text, hlp));
+                    hlp.bRefreshTreeLastMonth = true;
+                    var hlpReturn = CheckModelValidation(GetDatabaseConnectionInstance().UpdateSubCategoriesWithProductsForSelectedNodes(GridLookupColor.Text, hlp));
+                    if (hlpReturn != null)
+                    {
+                        filteredTreeList = hlpReturn.SubCategoryWithProducts;
+                    }
+                }
+
+                if (e.Parameter.Contains("_ShowAllItemsForSupplier"))//če stisne gumb Prikaži vse artikle za izbranega dobavitelja.
+                {
+                    hlpOptimalStockOrderModel hlp = new hlpOptimalStockOrderModel();
+                    hlp.sSelectedSupplier = searchString;
+                    hlp.bRefreshTreeLastMonth = false;
+                    hlp.SubCategoryWithProducts = FilterTreeHierarchy(selectedNodes, filteredTreeList);
+                    var hlpReturn = CheckModelValidation(GetDatabaseConnectionInstance().UpdateSubCategoriesWithProductsForSelectedNodes(GridLookupColor.Text, hlp));
                     if (hlpReturn != null)
                     {
                         filteredTreeList = hlpReturn.SubCategoryWithProducts;
@@ -331,7 +372,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                         products.Add(node);
                     }
                 }
-
+                searchString = searchString.Trim();
                 //preverimo kateri produkti imajo dobavitlejja, ki ga filtriramo. Če izbrana podskupina nima dobavitelja za ta produkt potem moramo javiti uporabniku da more odpreti šifro v Pantehonu.
                 products = GetFilteredProductsBySupplier(searchString, products);
 
@@ -363,7 +404,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                                 else if (productsForSubGroupBySupplier.Count > 1)
                                 {
                                     int cnt = productsForSubGroupBySupplier.Count - 1;
-                                    product.Name = productsForSubGroupBySupplier[0].NAZIV + " (" + cnt.ToString() + " artikel/ov)";
+                                    product.Name = productsForSubGroupBySupplier[0].NAZIV.Trim() + " (" + cnt.ToString() + " artikel/ov)";
                                 }
                                 product.Product.NAZIV = productsForSubGroupBySupplier[0].NAZIV;
                                 product.Product.IDENT = productsForSubGroupBySupplier[0].IDENT;
@@ -389,11 +430,15 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                     string valid = ValidateSelectedSubGroups(filteredList, searchString.Trim());
                     if (String.IsNullOrEmpty(valid))
                     {
-                        CallbackPanelTreeHierarchyWithProducts.JSProperties["cpShowSubmitOrderButton"] = true;//Uporabnik ima možnost oddati naročilo že v drugem koraku
+                        //CallbackPanelTreeHierarchyWithProducts.JSProperties["cpShowSubmitOrderButton"] = true;//Uporabnik ima možnost oddati naročilo že v drugem koraku
                         createEntityModel = true;
                     }
                     else
+                    {
                         CallbackPanelTreeHierarchyWithProducts.JSProperties["cpErrorOpenNewCodeForProduct"] = valid;
+                        //Prijavljenemu uporabniku pošljemo mail z obvestilom, da mora odpreti nove šifre za artikle in dobavitelja.
+                        SendMailToUser(valid);
+                    }
 
                     GetOptimalStockOrderDataProvider().SetOptimalStockTreeHierarchyWithProductsFilterBySupplier(filteredList);
                 }
@@ -441,7 +486,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                             clickedNode.Name = sNameMainProduct;
                         }
 
-                            foreach (var item in clickedNode.Product.AllSubCategories)
+                        foreach (var item in clickedNode.Product.AllSubCategories)
                         {
                             if (!treelistWithProducts.Exists(c => c.Name == item.NazivPodKategorije))
                             {
@@ -452,7 +497,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                                     ID = newId,
                                     Name = item.NazivPodKategorije,
                                     ParentID = clickedNode.ParentID,
-                                    KolicinaZaloga = clickedNode.TrenutnaZalogaProdukt,
+                                    KolicinaZaloga = item.VsotaZaloge,
                                     KolicinaNarocilo = clickedNode.KolicinaNarocilo,
                                     Product = new GetProductsByOptimalStockValuesModel { ChildProducts = new List<GetProductsByOptimalStockValuesModel>(item.ChildProducts), NAZIV = item.NazivPodKategorije }
                                 });
@@ -504,31 +549,18 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
             else if (e.Parameter == "StartSearchPopup")
             {
                 PopupControlSearchSupplier.ShowOnPageLoad = true;
-                //List<ClientSimpleModel> model;
-                //model = CheckModelValidation(GetDatabaseConnectionInstance().GetSupplierByName(txtSupplierSearch.Text.Trim()));
+            }
 
-                //if (model.Count > 1)
-                //{
-                //    PopupControlSearchSupplier.ShowOnPageLoad = true;
-                //}
-                //else if (model.Count == 1)
-                //{
-                //    AddSupplierToForm(model[0]);
-                //    GridLookupKontaktnaOSeba.DataBind();
-                //}
-                //else if (model.Count == 0)
-                //{
-                //    PopupControlSearchSupplier.ShowOnPageLoad = true;
-                //}
+            else if (e.Parameter == "ShowAllItemsForSupplier")
+            {
+
             }
         }
 
 
         protected void PopupControlSearchSupplier_WindowCallback(object source, PopupWindowCallbackArgs e)
         {
-            //RemoveSession(Enums.CommonSession.SearchString);
-            //RemoveSession(Enums.InquirySession.SelectedSupplierPopup);
-            //RemoveSession(Enums.InquirySession.SupplierListModel);
+            RemoveSession(Enums.OptimalStockOrderSession.SearchedSupplierList);
         }
         #endregion
 
@@ -555,15 +587,15 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
             //if (filterProductsBySupplier)
             //{
-                ASPxTreeList list = sender as ASPxTreeList;
-                if (list.GetSelectedNodes().Count <= 0 && list.Nodes.Count > 0)
+            ASPxTreeList list = sender as ASPxTreeList;
+            if (list.GetSelectedNodes().Count <= 0 && list.Nodes.Count > 0)
+            {
+                for (int i = 0; i < list.Nodes.Count; i++)
                 {
-                    for (int i = 0; i < list.Nodes.Count; i++)
-                    {
-                        ProcessNodes(list.Nodes[i], "VsotaZalNarRazlikaOpt");
-                    }
+                    ProcessNodes(list.Nodes[i], "VsotaZalNarRazlikaOpt");
                 }
-                filterProductsBySupplier = false;
+            }
+            filterProductsBySupplier = false;
             //}
         }
 
@@ -572,6 +604,35 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
             var list = GetOptimalStockOrderDataProvider().GetSupplierList();
 
             (sender as ASPxGridLookup).DataSource = list;
+        }
+
+        protected void GridLookupSupplierAlter_DataBinding(object sender, EventArgs e)
+        {
+            txtSupplier.ClientVisible = false;
+            GridLookupSupplierAlter.ClientVisible = false;
+            var list = GetOptimalStockOrderDataProvider().GetSupplierList();
+            if (list != null)
+            {
+                var sSelSupplier = list.FirstOrDefault(s => s.NazivPrvi == GridLookupSupplier.Text);
+
+                if (sSelSupplier != null && sSelSupplier.SubSupplier != null && sSelSupplier.SubSupplier.Count > 0)
+                {
+                    (sender as ASPxGridLookup).DataSource = sSelSupplier.SubSupplier;
+                    if (sSelSupplier.SubSupplier.Count > 0)
+                    {
+                        GridLookupSupplierAlter.ClientVisible = true;
+                        var sSub = sSelSupplier.SubSupplier.Where(s => s.LastSupplier == 1).FirstOrDefault();
+                        GridLookupSupplierAlter.Value = (sSub == null) ? sSelSupplier.SubSupplier[0].TempID : sSub.TempID; 
+                        bHasSubSupplier = true;
+                    }
+                }
+                else
+                {
+                    bHasSubSupplier = false;
+                    txtSupplier.ClientVisible = true;
+                }
+            }
+
         }
         #endregion
 
@@ -631,9 +692,74 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
         #endregion
 
         #region OtherEvents (BatchUpdate, HtmlRowPrepared)
+
+        private hlpCalculateWeight GetCalculateWeight(string sArtikelName)
+        {
+            hlpCalculateWeight hlpWeight = new hlpCalculateWeight();
+
+            if (sArtikelName != null)
+            {
+                sArtikelName = sArtikelName.ToUpper();
+
+                string[] split = sArtikelName.Split(' ');
+                foreach (var item in split)
+                {
+                    // weight
+                    if (item.Contains("g") || item.Contains("G"))
+                    {
+                        string[] splWeight = item.Split('G');
+                        if (splWeight.Length == 2 && CommonMethods.IsNumeric(splWeight[0].ToString()))
+                        {
+                            hlpWeight.Weight = Convert.ToInt32(splWeight[0]);
+                        }
+                    }
+
+                    // size
+                    if (item.Contains("x") || item.Contains("X"))
+                    {
+
+                        string[] splSize = item.Split('X');
+                        if (splSize.Length == 2 && CommonMethods.IsNumeric(splSize[0].ToString()) && CommonMethods.IsNumeric(splSize[1].ToString()))
+                        {
+                            string sSize1 = splSize[0];
+                            string sSize2 = splSize[1];
+
+                            sSize1 = sSize1.Replace(",", ".");
+                            sSize2 = sSize2.Replace(",", ".");
+
+                            hlpWeight.SizeA = CommonMethods.ParseDecimal(sSize1);
+                            hlpWeight.SizeB = CommonMethods.ParseDecimal(sSize2);
+                        }
+                    }
+                }
+            }
+            return hlpWeight;
+        }
+
+        private decimal CalculateSheetInKgAndBack(hlpCalculateWeight hw, decimal qnt, bool bToKg = true)
+        {
+            decimal calc = 0;
+
+            if (hw != null && hw.Weight > 0 && hw.SizeA > 0 && hw.SizeB > 0)
+            {
+                decimal pG = hw.Weight * (decimal)0.001;
+                decimal sA = hw.SizeA * (decimal)0.01;
+                decimal sB = hw.SizeB * (decimal)0.01;
+
+
+                calc = (bToKg) ? pG * sA * sB * qnt : qnt / pG / sA / sB;
+            }
+
+            return Convert.ToDecimal(calc);
+        }
+
         protected void ASPxGridViewProducts_BatchUpdate(object sender, ASPxDataBatchUpdateEventArgs e)
         {
             OptimalStockOrderPositionModel position = null;
+
+            decimal dStaraKolicina = 0;
+            decimal dStaraKolicinaPol = 0;
+            string sNazivArtikla = "";
             Type myType = typeof(OptimalStockOrderPositionModel);
             List<PropertyInfo> myPropInfo = myType.GetProperties().ToList();
             var productsPositions = GetOptimalStockOrderDataProvider().GetOptimalStockOrderModel().NarociloOptimalnihZalogPozicija.ToList();
@@ -645,11 +771,63 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                 foreach (DictionaryEntry obj in item.Keys)//we set table ID
                 {
                     PropertyInfo info = myPropInfo.Where(prop => prop.Name.Equals(obj.Key.ToString())).FirstOrDefault();
-
+                    var itm = productsPositions.FirstOrDefault(pp => pp.NarociloOptimalnihZalogPozicijaID == CommonMethods.ParseInt(obj.Value));
                     if (info != null)
                     {
-                        position = productsPositions.Where(p => p.NarociloOptimalnihZalogPozicijaID == (int)obj.Value).FirstOrDefault();
-                        break;
+                        sNazivArtikla = itm.NazivArtikla.ToString();
+                        dStaraKolicina = itm.Kolicina;
+                        dStaraKolicinaPol = itm.KolicinaPol;
+                        hlpCalculateWeight hw = GetCalculateWeight(sNazivArtikla);
+                        // preračun pol v kg iz naziva artikla seveda
+                        //foreach (DictionaryEntry inst in item.NewValues)
+                        //{
+                        foreach (var k in item.NewValues.Keys.OfType<object>().ToArray())
+                        {
+
+
+                            if (k.Equals("KolicinaPol"))
+                            {
+                                //if (CommonMethods.ParseDecimal(item.NewValues[k]) != 0)
+                                //{
+                                //    dKolicinePol = CommonMethods.ParseDecimal(item.NewValues[k]);
+
+                                //    decimal calc = CalculateSheetInKgAndBack(hw, CommonMethods.ParseDecimal(dKolicinePol), true);
+                                //    if (calc > 0)
+                                //    {
+                                //        dKolicine = calc;
+                                //    }
+                                //}
+
+                                decimal dNovaKolicinaPol = CommonMethods.ParseDecimal(item.NewValues[k]);
+
+                                if (dNovaKolicinaPol != dStaraKolicinaPol)
+                                {
+                                    decimal calc = CalculateSheetInKgAndBack(hw, CommonMethods.ParseDecimal(dNovaKolicinaPol), true);
+                                    if (calc > 0)
+                                    {
+                                        item.NewValues["Kolicina"] = Math.Round(calc, 2);
+                                    }
+                                }
+                            }
+
+                            if (k.Equals("Kolicina"))
+                            {
+                                decimal dNovaKolicina = CommonMethods.ParseDecimal(item.NewValues[k]);
+
+                                if (dNovaKolicina != dStaraKolicina)
+                                {
+                                    decimal calc = CalculateSheetInKgAndBack(hw, CommonMethods.ParseDecimal(dNovaKolicina), false);
+                                    if (calc > 0)
+                                    { 
+                                        item.NewValues["KolicinaPol"] = Math.Round(calc, 2);
+                                    }
+                                }
+                                
+                            }
+
+
+                            position = productsPositions.Where(p => p.NarociloOptimalnihZalogPozicijaID == (int)obj.Value).FirstOrDefault();
+                        }
                     }
                 }
 
@@ -750,16 +928,27 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
         private List<OptimalStockTreeHierarchy> GetFilteredProductsBySupplier(string sSupplierName, List<OptimalStockTreeHierarchy> lProductList)
         {
+            string sKategorija = "";
             for (int i = lProductList.Count - 1; i >= 0; i--)
             {
                 OptimalStockTreeHierarchy item = lProductList[i];
                 if (item != null)
                 {
-                    if (item.Product.ChildProducts.Where(sp => sp.DOBAVITELJ.Contains(sSupplierName)).ToList().Count == 0)
+                    if (item.Product != null && item.Product.ChildProducts != null)
                     {
-                        //lProductList.RemoveAt(i);
-                        item.Name += "  Potrebno je odpreti šifro!";
-                        item.OpenNewCodeForProductInPantheon = true;
+                        if (item.Product.ChildProducts.Where(sp => sp.DOBAVITELJ.Contains(sSupplierName)).ToList().Count == 0)
+                        {
+                            //lProductList.RemoveAt(i);
+
+                            if (item.Gloss != null)
+                            {
+                                sKategorija = item.Gloss;
+                            }
+
+
+                            item.Name = (sKategorija.Length > 0) ? sKategorija + " " + item.Name + " Potrebno je odpreti šifro!" : item.Name + " Potrebno je odpreti šifro!";
+                            item.OpenNewCodeForProductInPantheon = true;
+                        }
                     }
                 }
             }
@@ -773,7 +962,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
             string error = "";
             if (selectedNodes != null && selectedNodes.Count > 0)
             {
-                error = "Potrebno je odpreti šifre za naslednje izdelke za dobavitelja <strong>" + supplier + "</strong><br /><ul class=\"d-flex justify-content-center\">";
+                error = "Potrebno je odpreti šifre za naslednje izdelke za dobavitelja <strong>" + supplier + "</strong><br /><ul class=\"\">";
                 foreach (var item in selectedNodes)
                 {
                     error += "<li>" + item.Name + "</li>";
@@ -782,6 +971,16 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
             }
 
             return error;
+        }
+
+        private void SendMailToUser(string message)
+        {
+            CreateNewCodeMailModel mailModel = new CreateNewCodeMailModel();
+
+            mailModel.UserId = PrincipalHelper.GetUserPrincipal().ID;
+            mailModel.Body = message;
+
+            CheckModelValidation(GetDatabaseConnectionInstance().CreateEmailForUserCreateNewCodeForProduct(mailModel));
         }
         #endregion
 
@@ -806,7 +1005,9 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
             while (iterator.Current != null)
             {
-                iterator.Current.Selected = (filterProductsBySupplier ? true : ((Convert.ToDecimal(iterator.Current.GetValue(ColumnName)) < 0) ? true : false));
+                if (iterator.Current.IsFit)
+                    iterator.Current.Selected = (filterProductsBySupplier ? true : ((Convert.ToDecimal(iterator.Current.GetValue(ColumnName)) < 0) ? true : false));
+
                 iterator.GetNext();
             }
         }
@@ -854,37 +1055,68 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                     OptimalStockOrderPositionModel osop = new OptimalStockOrderPositionModel();
                     osop.KategorijaNaziv = (prod != null) ? GetCategoriyNameFromProduct(prod) : "";
                     osop.Kolicina = prod.KolicinaNarocilo;
+                    osop.EMvKG = "KG";
+                    osop.EMvPol = "POL";
                     osop.NarociloOptimalnihZalogPozicijaID = positions.Count > 0 ? positions.Max(m => m.NarociloOptimalnihZalogPozicijaID) + 1 : 1;//Nastavimo začasne Id-je da bomo lahko prikazovali vrednosti v grid-u
                                                                                                                                                    //ob shranjevanje je potrebno te id-je nastavit na 0!!!
-                    osop.NazivArtikla = prod.Product.NAZIV;
-                    osop.IdentArtikla_P = prod.Product.IDENT;
-                    osop.NazivPodKategorija = prod.NazivPodkategorije;
+                    osop.NazivArtikla = prod.Product.NAZIV.Trim();
+                    osop.IdentArtikla_P = (prod.Product.IDENT != null) ? prod.Product.IDENT.Trim() : "";
+                    osop.NazivPodKategorija = prod.NazivPodkategorijeFilter;
                     osop.VsotaZalNarRazlikaOpt = prod.VsotaZalNarRazlikaOpt;
 
                     positions.Add(osop);
-                }
-            }
 
-            if (selectedProductsFromMainProduct != null && selectedProductsFromMainProduct.Count > 0)
-            {
-                foreach (var item in selectedProductsFromMainProduct)
-                {
-                    foreach (var prod in item.Product.SelectedChildProducts)
+                    // preverimo ali obstaja slučajno še za to podskupino ročno dodana artikel
+                    if (selectedProductsFromMainProduct != null && selectedProductsFromMainProduct.Count > 0)
                     {
-                        OptimalStockOrderPositionModel osop = new OptimalStockOrderPositionModel();
-                        osop.KategorijaNaziv = GetCategoriyNameFromProduct(item);
-                        osop.Kolicina = item.KolicinaNarocilo;
-                        osop.NarociloOptimalnihZalogPozicijaID = positions.Count > 0 ? positions.Max(m => m.NarociloOptimalnihZalogPozicijaID) + 1 : 1;//Nastavimo začasne Id-je da bomo lahko prikazovali vrednosti v grid-u
-                                                                                                                                                       //ob shranjevanje je potrebno te id-je nastavit na 0!!!
-                        osop.NazivArtikla = prod.NAZIV;
-                        osop.IdentArtikla_P = prod.IDENT;
-                        osop.NazivPodKategorija = prod.NazivPodkategorije;
-                        osop.VsotaZalNarRazlikaOpt = item.VsotaZalNarRazlikaOpt;
+                        foreach (var itemSelected in selectedProductsFromMainProduct)
+                        {
+                            if (prod.NazivPodkategorijeFilter == itemSelected.NazivPodkategorijeFilter)
+                            {
+                                if (itemSelected.Product.SelectedChildProducts != null && itemSelected.Product.SelectedChildProducts.Count > 0)
+                                {
+                                    foreach (var prodSelected in itemSelected.Product.SelectedChildProducts)
+                                    {
+                                        OptimalStockOrderPositionModel osopSelected = new OptimalStockOrderPositionModel();
+                                        osopSelected.KategorijaNaziv = GetCategoriyNameFromProduct(itemSelected);
+                                        osopSelected.Kolicina = itemSelected.KolicinaNarocilo;
+                                        osopSelected.NarociloOptimalnihZalogPozicijaID = positions.Count > 0 ? positions.Max(m => m.NarociloOptimalnihZalogPozicijaID) + 1 : 1;//Nastavimo začasne Id-je da bomo lahko prikazovali vrednosti v grid-u
+                                                                                                                                                                               //ob shranjevanje je potrebno te id-je nastavit na 0!!!
+                                        osopSelected.NazivArtikla = prodSelected.NAZIV.Trim();
+                                        osopSelected.IdentArtikla_P = prodSelected.IDENT.Trim();
+                                        osopSelected.NazivPodKategorija = itemSelected.NazivPodkategorijeFilter;
+                                        osopSelected.VsotaZalNarRazlikaOpt = itemSelected.VsotaZalNarRazlikaOpt;
 
-                        positions.Add(osop);
+                                        positions.Add(osopSelected);
+                                    }
+                                }
+
+                            }
+                        }
                     }
                 }
             }
+
+            //if (selectedProductsFromMainProduct != null && selectedProductsFromMainProduct.Count > 0)
+            //{
+            //    foreach (var item in selectedProductsFromMainProduct)
+            //    {
+            //        foreach (var prod in item.Product.SelectedChildProducts)
+            //        {
+            //            OptimalStockOrderPositionModel osop = new OptimalStockOrderPositionModel();
+            //            osop.KategorijaNaziv = GetCategoriyNameFromProduct(item);
+            //            osop.Kolicina = item.KolicinaNarocilo;
+            //            osop.NarociloOptimalnihZalogPozicijaID = positions.Count > 0 ? positions.Max(m => m.NarociloOptimalnihZalogPozicijaID) + 1 : 1;//Nastavimo začasne Id-je da bomo lahko prikazovali vrednosti v grid-u
+            //                                                                                                                                           //ob shranjevanje je potrebno te id-je nastavit na 0!!!
+            //            osop.NazivArtikla = prod.NAZIV;
+            //            osop.IdentArtikla_P = prod.IDENT;
+            //            osop.NazivPodKategorija = item.NazivPodkategorijeFilter;
+            //            osop.VsotaZalNarRazlikaOpt = item.VsotaZalNarRazlikaOpt;
+
+            //            positions.Add(osop);
+            //        }
+            //    }
+            //}
 
             // grupiraj po nazivu podkategorija
             var groupedBySubCategorie = positions.Where(w => !String.IsNullOrEmpty(w.NazivPodKategorija)).GroupBy(g => g.NazivPodKategorija).ToList();
@@ -906,6 +1138,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
             GetOptimalStockOrderDataProvider().SetOptimalStockOrderModel(optimalStockOrder);
             ASPxGridViewProducts.DataBind();
+            GridLookupSupplierAlter.DataBind();
 
             FillBasicDataForOrder();
         }
@@ -917,12 +1150,11 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
             txtSumQuantity.Text = GetOptimalStockOrderDataProvider().GetOptimalStockOrderModel().NarociloOptimalnihZalogPozicija.Sum(l => l.Kolicina).ToString("N2");
             txtName.Text = "Naročilo optimalne zaloge za: " + txtSupplier.Text.Trim() + ", dne: " + DateEditSubmitOrder.Date.ToString("dd. MMMM yyyy");
         }
-        #endregion
+
+
+
 
         #endregion
-
-        
-
-        
     }
+    #endregion
 }

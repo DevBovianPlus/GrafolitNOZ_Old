@@ -317,6 +317,14 @@ namespace GrafolitNOZ.Helpers
             return WebServiceOptimalStockOrderURL + "GetProductsForSelectedOptimalStock?color=" + color;
         }
 
+
+        public static string UpdateSubCategoriesWithProductsForSelectedNodes(string color)
+        {
+            return WebServiceOptimalStockOrderURL + "UpdateSubCategoriesWithProductsForSelectedNodes?color=" + color;
+        }
+
+
+
         public static string GetOptimalStockStatuses()
         {
             return WebServiceOptimalStockOrderURL + "GetOptimalStockStatuses";
@@ -331,6 +339,11 @@ namespace GrafolitNOZ.Helpers
         {
             return WebServiceOptimalStockOrderURL + "CopyOptimalStockOrderByID?optimalStockOrderID=" + optimalStockOrderID;
         }
+
+        public static string CreateEmailForUserCreateNewCodeForProduct()
+        {
+            return WebServiceOptimalStockOrderURL + "CreateEmailForUserCreateNewCodeForProduct";
+        }
         #endregion
 
         #region Settings
@@ -338,6 +351,11 @@ namespace GrafolitNOZ.Helpers
         public static string GetSettings()
         {
             return WebServiceSettingsURL + "GetAppSettings";
+        }
+
+        public static string GetAllEmailsNOZ()
+        {
+            return WebServiceSettingsURL + "GetAllEmailsNOZ";
         }
 
         public static string SaveSettings()

@@ -50,7 +50,8 @@ namespace GrafolitNOZ.Common
             filter,
             id,
             submitInquiry,
-            submitOrder
+            submitOrder,
+            addNew
         }
 
         public enum PreviousPage
@@ -124,6 +125,9 @@ namespace GrafolitNOZ.Common
             OptimalStockStatuses,
             MainProductPopup,
             SelectedChildProducts,
+            SearchedSupplierList,
+            DeleteSessionOnFirstLoadFromMenu
+
         }
     }
 }

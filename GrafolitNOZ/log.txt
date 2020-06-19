@@ -424,3 +424,11 @@ System
 16. 06. 2020 16:22:08 Before SignIn
 16. 06. 2020 16:22:44 After SignIn
 16. 06. 2020 16:22:44 After Authenticate
+18. 06. 2020 15:40:29 Before Authenticate
+18. 06. 2020 15:40:29 Before SignIn
+18. 06. 2020 15:40:56 After SignIn
+18. 06. 2020 15:40:56 After Authenticate
+19. 06. 2020 07:42:11 Before Authenticate
+19. 06. 2020 07:42:12 Before SignIn
+19. 06. 2020 07:42:57 After SignIn
+19. 06. 2020 07:42:57 After Authenticate

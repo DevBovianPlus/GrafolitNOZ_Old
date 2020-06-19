@@ -48,8 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DatabaseWebService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DatabaseWebService">
       <HintPath>..\..\DatabaseWebService\bin\DatabaseWebService.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Web.ASPxGantt.v19.2, Version=19.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -226,6 +225,7 @@
     </Compile>
     <Compile Include="Helpers\FileIOHelper.cs" />
     <Compile Include="Helpers\FileToDownload.cs" />
+    <Compile Include="Helpers\hlpCalculateWeight.cs" />
     <Compile Include="Helpers\InfrastructureHelper.cs" />
     <Compile Include="Helpers\PrincipalHelper.cs" />
     <Compile Include="Helpers\PropertyCopyHelper.cs" />

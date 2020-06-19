@@ -112,6 +112,15 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder {
         protected global::DevExpress.Web.ASPxButton ASPxButton1;
         
         /// <summary>
+        /// btnShowAllItems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnShowAllItems;
+        
+        /// <summary>
         /// btnRefreshTreeList control.
         /// </summary>
         /// <remarks>
@@ -173,6 +182,15 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::DevExpress.Web.ASPxTextBox txtSupplier;
+        
+        /// <summary>
+        /// GridLookupSupplierAlter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxGridLookup GridLookupSupplierAlter;
         
         /// <summary>
         /// ASPxLabel3 control.
