@@ -488,7 +488,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
                         foreach (var item in clickedNode.Product.AllSubCategories)
                         {
-                            if (!treelistWithProducts.Exists(c => c.Name == item.NazivPodKategorije))
+                            if (!treelistWithProducts.Exists(c => c.NazivPodkategorijeFilter == item.NazivPodKategorijeFilter && c.Gloss == item.Gloss))
                             {
                                 int newId = treelistWithProducts.Max(m => m.ID) + 1;
                                 //Dodamo produkt pod starša
@@ -499,6 +499,8 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                                     ParentID = clickedNode.ParentID,
                                     KolicinaZaloga = item.VsotaZaloge,
                                     KolicinaNarocilo = clickedNode.KolicinaNarocilo,
+                                    NazivPodkategorije = item.NazivPodKategorije,
+                                    NazivPodkategorijeFilter = item.NazivPodKategorijeFilter,
                                     Product = new GetProductsByOptimalStockValuesModel { ChildProducts = new List<GetProductsByOptimalStockValuesModel>(item.ChildProducts), NAZIV = item.NazivPodKategorije }
                                 });
                             }

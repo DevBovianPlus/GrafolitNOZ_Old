@@ -432,3 +432,37 @@ System
 19. 06. 2020 07:42:12 Before SignIn
 19. 06. 2020 07:42:57 After SignIn
 19. 06. 2020 07:42:57 After Authenticate
+28. 07. 2020 11:11:44 The operation has timed out System
+28. 07. 2020 11:18:35 The request was aborted: The operation has timed out. System
+28. 07. 2020 11:26:56 The request was aborted: The operation has timed out. System
+28. 07. 2020 11:48:54 The request was aborted: The operation has timed out. System
+28. 07. 2020 12:04:01 The operation has timed out System
+28. 07. 2020 13:51:58 The request was aborted: The operation has timed out. System
+28. 07. 2020 13:53:38 The operation has timed out System
+28. 07. 2020 13:59:23 The request was aborted: The operation has timed out. System
+28. 07. 2020 14:01:03 The operation has timed out System
+28. 07. 2020 14:36:40 The request was aborted: The operation has timed out. System
+28. 07. 2020 14:48:23 The request was aborted: The operation has timed out. System
+28. 07. 2020 14:58:14 The operation has timed out System
+28. 07. 2020 23:31:09 Before Authenticate
+28. 07. 2020 23:31:09 Before SignIn
+28. 07. 2020 23:31:11 After SignIn
+28. 07. 2020 23:31:11 After Authenticate
+28. 07. 2020 23:34:17 Get products for selected optimal stock error!Object reference not set to an instance of an object.
+28. 07. 2020 23:38:12 The request was aborted: The operation has timed out. System
+29. 07. 2020 00:02:29 The request was aborted: The operation has timed out. System
+30. 07. 2020 13:45:01 Before Authenticate
+30. 07. 2020 13:45:01 Before SignIn
+30. 07. 2020 13:45:02 After SignIn
+30. 07. 2020 13:45:02 After Authenticate
+30. 07. 2020 14:29:29 The request was aborted: The operation has timed out. System
+30. 07. 2020 14:33:53 The operation has timed out System
+30. 07. 2020 14:49:27 The operation has timed out System
+30. 07. 2020 14:51:54 The operation has timed out System
+30. 07. 2020 15:16:23 The operation has timed out System
+31. 07. 2020 08:18:34 Before Authenticate
+31. 07. 2020 08:18:34 Before SignIn
+31. 07. 2020 08:18:47 After SignIn
+31. 07. 2020 08:18:47 After Authenticate
+31. 07. 2020 08:37:05 The request was aborted: The operation has timed out. System
+31. 07. 2020 08:43:52 The operation has timed out System

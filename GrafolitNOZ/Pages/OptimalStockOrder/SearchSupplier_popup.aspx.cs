@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GrafolitNOZ.Common;
 
 namespace GrafolitNOZ.Pages.OptimalStockOrder
 {
@@ -36,8 +37,13 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
         private void Initialize()
         {
-            //model = CheckModelValidation(GetDatabaseConnectionInstance().GetSupplierByName(searchString));
-            //GetInquiryDataProvider().SetSearchedSupplierListModel(model);
+            int tempID = 0;
+            model = CheckModelValidation(GetDatabaseConnectionInstance().GetSupplierList());
+
+            if (model != null)
+                model.ForEach(a => a.TempID = ++tempID);
+
+            GetOptimalStockOrderDataProvider().SetSearchedSupplierListModel(model);
 
             ASPxGridViewSupplierSearchResult.DataBind();
         }
@@ -50,9 +56,8 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
             if (confirm)
                 confirmCancelAction = "Potrdi";
 
-            //RemoveSession(Enums.CommonSession.SearchString);
-            //RemoveSession(Enums.InquirySession.SelectedSupplierPopup);
-            //RemoveSession(Enums.InquirySession.SupplierListModel);
+
+            RemoveSession(Enums.OptimalStockOrderSession.SearchedSupplierList);
 
             ClientScript.RegisterStartupScript(GetType(), "ANY_KEY", string.Format("window.parent.OnClosePopUpHandler('{0}','{1}');", confirmCancelAction, "SupplierSearch"), true);
         }
@@ -65,52 +70,30 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
 
         protected void btnConfirm_Click(object sender, EventArgs e)
         {
-            //TODO:
-            //Pridobi seznam obkljukanih dobaviteljev
-            //prepiši jih vnov objekt tipa InquiryPositionSupplier
-            //vsak objekt dodaj v seznam GetInquiryDataProvider().GetInquiryPositionModel().PovprasevanjePozicijaDobavitelj
-            //Shrani v sejo nov objekt GetInquiryDataProvider().SetInquiryPositionModel()
-            //Preveri če izbrani dobavitelj v seznamu že obstaja. Če, potem ga ne dodajamo.
 
             List<string> selectedSuppliers = ASPxGridViewSupplierSearchResult.GetSelectedFieldValues("NazivPrvi").OfType<string>().ToList();
 
             if (selectedSuppliers != null && selectedSuppliers.Count > 0)
             {
-                string sSelectedSupplier = ASPxGridViewSupplierSearchResult.GetSelectedFieldValues("NazivPrvi")[0].ToString().Trim();
+                var supplierlist = GetOptimalStockOrderDataProvider().GetSupplierList();
+                var searchedSupplierList = GetOptimalStockOrderDataProvider().GetSearchedSupplierListModel();
 
-                //AddValueToSession(Enums.InquirySession.ReturnSupplierVal, sSelectedSupplier);
+                foreach (var item in selectedSuppliers)
+                {
+                    var supplier = searchedSupplierList.Where(s => s.NazivPrvi == item).FirstOrDefault();
+                    if (supplier != null && !supplierlist.Exists(s => s.NazivPrvi == supplier.NazivPrvi))//če v seznamu najdemo takšnega dobavitelja ki še ni v že obstoječem seznamu na gridlookup-u
+                        supplierlist.Add(supplier);
+                }
 
-                //ClientFullModel Supplier = CheckModelValidation(GetDatabaseConnectionInstance().GetClientByNameOrInsert(sSelectedSupplier));
-
-                //InquiryPositionModel model = GetInquiryDataProvider().GetInquiryPositionModel();
-                //if (model == null)
-                //{
-                //    model = new InquiryPositionModel();
-
-                //    model.PovprasevanjePozicijaID = 0;
-                //    model.PovprasevanjeID = GetInquiryDataProvider().GetInquiryModel().PovprasevanjeID;
-
-                //    model.tsIDOsebe = PrincipalHelper.GetUserPrincipal().ID;
-                //    model.tsUpdateUserID = PrincipalHelper.GetUserPrincipal().ID;
-
-
-                //}
-                //if (Supplier != null)
-                //{
-                //    model.Dobavitelj = Supplier;
-                //    model.DobaviteljID = Supplier.idStranka;
-                //    model.DobaviteljNaziv_P = sSelectedSupplier;
-                //}
-                //GetInquiryDataProvider().SetInquiryPositionModel(model);
+                GetOptimalStockOrderDataProvider().SetSupplierList(supplierlist);
             }
-
 
             RemoveSessionsAndClosePopUP(true);
         }
 
         protected void ASPxGridViewSupplierSearchResult_DataBinding(object sender, EventArgs e)
         {
-            //model = GetInquiryDataProvider().GetSearchedSupplierListModel();
+            model = GetOptimalStockOrderDataProvider().GetSearchedSupplierListModel();
 
             if (model != null)
                 (sender as ASPxGridView).DataSource = model;

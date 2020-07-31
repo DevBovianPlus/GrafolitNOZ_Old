@@ -121,5 +121,18 @@ namespace GrafolitNOZ.Helpers.DataProviders
 
             return null;
         }
+
+        public void SetSearchedSupplierListModel(List<ClientSimpleModel> model)
+        {
+            AddValueToSession(Enums.OptimalStockOrderSession.SearchedSupplierList, model);
+        }
+
+        public List<ClientSimpleModel> GetSearchedSupplierListModel()
+        {
+            if (SessionHasValue(Enums.OptimalStockOrderSession.SupplierListModel))
+                return (List<ClientSimpleModel>)GetValueFromSession(Enums.OptimalStockOrderSession.SearchedSupplierList);
+
+            return null;
+        }
     }
 }

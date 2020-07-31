@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="Kreiraj naročilo" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="OptimalStockOrderAdd.aspx.cs" Inherits="GrafolitNOZ.Pages.OptimalStockOrder.OptimalStockOrderAdd" %>
 
-<%@ Register Assembly="DevExpress.Web.ASPxTreeList.v19.2, Version=19.2.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxTreeList" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.ASPxTreeList.v19.2, Version=19.2.8.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" Namespace="DevExpress.Web.ASPxTreeList" TagPrefix="dx" %>
 
 <%@ MasterType VirtualPath="~/Main.Master" %>
 
@@ -9,6 +9,18 @@
     <script type="text/javascript">
         var isRequestInitiated = false;
         var btnRegreshTreeListVisible = false;
+
+        $(document).ready(function () {
+            var deleteSessions = GetUrlQueryStrings()['addNew'];
+
+            if (deleteSessions) {
+                //we delete successMessage query string so we show modal only once!
+                var params = QueryStringsToObject();
+                delete params.addNew;
+                var path = window.location.pathname + '?' + SerializeQueryStrings(params);
+                history.pushState({}, document.title, path);
+            }
+        });
 
         function CheckFieldValidation() {
             var process = false;
@@ -39,14 +51,15 @@
             if (CallbackPanelTreeHierarchyWithProducts.cpShowSubmitOrderButton != null && CallbackPanelTreeHierarchyWithProducts.cpShowSubmitOrderButton !== undefined) {
 
                 $('.sw-btn-next').removeClass('d-none');
-                $('.btn-primary').removeClass('d-none');
+                //$('.btn-success').removeClass('d-none');
                 delete (CallbackPanelTreeHierarchyWithProducts.cpShowSubmitOrderButton);
             }
             else if (CallbackPanelTreeHierarchyWithProducts.cpErrorOpenNewCodeForProduct != null && CallbackPanelTreeHierarchyWithProducts.cpErrorOpenNewCodeForProduct !== undefined) {
                 ShowModal("Napaka pri izbiri dobavitelja in podskupin", CallbackPanelTreeHierarchyWithProducts.cpErrorOpenNewCodeForProduct);
-                $('.btn-primary').addClass('d-none');
+                $('.btn-success').addClass('d-none');
                 $('.sw-btn-next').addClass('d-none');
-                btnRefreshTreeList.SetVisible(true);
+                btnRegreshTreeListVisible = true;
+                //btnRefreshTreeList.SetVisible(true);
                 delete (CallbackPanelTreeHierarchyWithProducts.cpErrorOpenNewCodeForProduct);
             }
 
@@ -54,6 +67,14 @@
                 btnRefreshTreeList.SetVisible(btnRegreshTreeListVisible);
                 btnRegreshTreeListVisible = false;
             }
+            else
+                $('.sw-btn-next').removeClass('d-none');
+
+
+            if (lookUpSupplier.GetText() != "")
+                btnShowAllItemsForSupplier.SetVisible(true);
+            else
+                btnShowAllItemsForSupplier.SetVisible(false);
         }
 
         function lookUpCategory_Valuechanged(s, e) {
@@ -73,7 +94,22 @@
         }
 
         function lookUpSupplier_ValueChanged(s, e) {
-            CallbackPanelTreeHierarchyWithProducts.PerformCallback("FilterProductsBySupplier");
+            var count = treeListWithProducts.GetVisibleSelectedNodeKeys().length;
+            var nodesSelected = false;
+            if (count > 0) {
+                $('.sw-btn-next').removeClass('d-none');
+                CallbackPanelTreeHierarchyWithProducts.PerformCallback("FilterProductsBySupplier");
+                nodesSelected = true;
+            }
+            else {
+                ShowModal("Potrebno izbrati vsaj eno skupino!");
+                lookUpSupplier.SetValue(null);
+            }
+
+            if (lookUpSupplier.GetText() != "" && nodesSelected)
+                btnShowAllItemsForSupplier.SetVisible(true);
+            else
+                btnShowAllItemsForSupplier.SetVisible(false);
         }
 
 
@@ -88,7 +124,11 @@
                     switch (sender) {
                         case 'MainProductNodeClick':
                             PopupControlMainProductProductsClick.Hide();
-                            CallbackPanelTreeHierarchyWithProducts.PerformCallback("AddChildProductToList")
+                            CallbackPanelTreeHierarchyWithProducts.PerformCallback("AddChildProductToList");
+                            break;
+                        case 'SupplierSearch':
+                            PopupControlSearchSupplier.Hide();
+                            lookUpSupplier.GetGridView().Refresh();
                             break;
                     }
                     break;
@@ -96,6 +136,8 @@
                     switch (sender) {
                         case 'MainProductNodeClick':
                             PopupControlMainProductProductsClick.Hide();
+                        case 'SupplierSearch':
+                            PopupControlSearchSupplier.Hide();
                     }
                     break;
             }
@@ -132,10 +174,17 @@
             var process = true;
 
             if (process) {
+                LoadingPanel.Show();
                 CallbackPanelTreeHierarchyWithProducts.PerformCallback("StartSearchPopup");
             }
             else
                 e.processOnServer = false;
+        }
+
+        function btnShowAllItemsForSupplier_Click(s, e) {
+            btnRefreshTreeList.SetVisible(false);
+            LoadingPanel.Show();
+            CallbackPanelTreeHierarchyWithProducts.PerformCallback("FilterProductsBySupplier_ShowAllItemsForSupplier");
         }
     </script>
 </asp:Content>
@@ -166,8 +215,12 @@
         });
 
         $("#stepwizard").on("showStep", function (e, anchorObject, stepNumber, stepDirection) {
+            //alert(stepNumber);
             if (stepNumber == 0) {
                 $('.btn-success').addClass('d-none');
+            }
+            else if (stepNumber == 2) {
+                $('.btn-success').removeClass('d-none');
             }
         });
 
@@ -175,18 +228,16 @@
             var process = false;
             //alert(stepNumber);
 
-            if (stepDirection === 'forward' && stepNumber >= 1) {
+            if (stepDirection === 'forward' && stepNumber == 1 && lookUpSupplier.GetText() != "") {
                 $('.btn-success').removeClass('d-none');
             }
             else
                 $('.btn-success').addClass('d-none');
 
             if (stepDirection === 'backward' && stepNumber == 2)
-                $('.btn-success').removeClass('d-none');
-
-            if (stepDirection === 'forward' && stepNumber == 0 && lookUpSupplier.GetText() !== "") {
-                $('.btn-success').removeClass('d-none');
-            }
+                $('.btn-success').addClass('d-none');
+            else if (stepDirection === 'backward' && stepNumber == 1)
+                $('.sw-btn-next').removeClass('d-none');
 
             //samo ko se pomikamo naprej preverimo validacijo kontrol
             if (stepDirection === 'forward') {
@@ -209,8 +260,8 @@
                             LoadingPanel.Show();
                             CallbackPanelProducts.PerformCallback("BindSelectedProducts");
                         }
-                        else
-                            $('.btn-primary').addClass('d-none');
+                        //else
+                        //$('.btn-success').addClass('d-none');
 
                         return process;
                         break;
@@ -235,11 +286,9 @@
                             CallbackPanelOptimalStockOrder.PerformCallback("OpenNewOptimalStockOrder");
                         }
                         else
-                            $('.btn-primary').addClass('d-none');
+                            $('.btn-success').addClass('d-none');
 
                         return process;
-                        break;
-                    case 3://iz prikaz ewonov na prikaz dodatnih podatkov korak
                         break;
                 }
             }
@@ -371,7 +420,7 @@
                                     </div>
 
                                     <h5 class="font-italic border-bottom pl-2 pb-1 mt-2 mb-3">Optimalna zaloga</h5>
-                                    <dx:ASPxTreeList ID="TreeListOptimalStock" runat="server" utoGenerateColumns="False" ClientInstanceName="treeList"
+                                    <dx:ASPxTreeList ID="TreeListOptimalStock" runat="server" AutoGenerateColumns="False" ClientInstanceName="treeList"
                                         Width="100%" KeyFieldName="ID" ParentFieldName="ParentID" OnDataBinding="TreeListOptimalStock_DataBinding" SettingsSelection-Recursive="true"
                                         SettingsSelection-Enabled="true" SettingsSelection-AllowSelectAll="true" SettingsBehavior-AutoExpandAllNodes="true" SettingsBehavior-AllowFocusedNode="true"
                                         OnHtmlDataCellPrepared="TreeListOptimalStock_HtmlDataCellPrepared" OnDataBound="TreeListOptimalStock_DataBound">
@@ -408,58 +457,82 @@
                                 <div class="card-body">
 
                                     <div class="row m-0 pb-3 pt-3">
-                                        <div class="col-lg-6 mb-2 mb-lg-0">
+                                        <div class="col-lg-8 mb-2 mb-lg-0">
                                             <div class="row m-0 align-items-center">
                                                 <div class="col-0 p-0" style="margin-right: 15px;">
                                                     <dx:ASPxLabel ID="ASPxLabel9" runat="server" Text="DOBAVITELJ : " Font-Size="12px"></dx:ASPxLabel>
                                                 </div>
-                                                <div class="col-4 p-0 mr-3">
-                                                    <dx:ASPxGridLookup ID="GridLookupSupplier" runat="server" ClientInstanceName="lookUpSupplier"
-                                                        KeyFieldName="TempID" TextFormatString="{0}" CssClass="text-box-input"
-                                                        Paddings-PaddingTop="0" Paddings-PaddingBottom="0" Width="100%" Font-Size="13px"
-                                                        OnLoad="ASPxGridLookupLoad_WidthMedium" OnDataBinding="GridLookupSupplier_DataBinding" IncrementalFilteringMode="Contains">
-                                                        <ClientSideEvents ValueChanged="lookUpSupplier_ValueChanged" />
-                                                        <ClearButton DisplayMode="OnHover" />
-                                                        <FocusedStyle CssClass="focus-text-box-input"></FocusedStyle>
-                                                        <GridViewStyles>
-                                                            <Header CssClass="gridview-no-header-padding" ForeColor="Black"></Header>
-                                                        </GridViewStyles>
-                                                        <GridViewProperties>
-                                                            <SettingsBehavior EnableRowHotTrack="True" AllowEllipsisInText="true" AllowDragDrop="false" />
-                                                            <SettingsPager EnableAdaptivity="true" PageSize="100">
-                                                                <Summary Visible="true" Text="Vseh zapisov : {2}" EmptyText="Ni zapisov" />
-                                                            </SettingsPager>
-                                                            <Settings ShowFilterRow="false" ShowFilterRowMenu="false" ShowVerticalScrollBar="True"
-                                                                ShowHorizontalScrollBar="true" VerticalScrollableHeight="250"></Settings>
-                                                        </GridViewProperties>
-                                                        <SettingsAdaptivity Mode="OnWindowInnerWidth" ModalDropDownCaption="Osebe" SwitchToModalAtWindowInnerWidth="650" />
-                                                        <Columns>
+                                                <div class="col-9 p-0 mr-3">
+                                                    <div class="row m-0 p-0 align-items-center">
+                                                        <div class="col-6 pr-0">
+                                                            <dx:ASPxGridLookup ID="GridLookupSupplier" runat="server" ClientInstanceName="lookUpSupplier"
+                                                                KeyFieldName="TempID" TextFormatString="{0}" CssClass="text-box-input"
+                                                                Paddings-PaddingTop="0" Paddings-PaddingBottom="0" Width="100%" Font-Size="13px"
+                                                                OnLoad="ASPxGridLookupLoad_WidthMedium" OnDataBinding="GridLookupSupplier_DataBinding" IncrementalFilteringMode="Contains">
+                                                                <ClientSideEvents ValueChanged="lookUpSupplier_ValueChanged" />
+                                                                <ClearButton DisplayMode="OnHover" />
+                                                                <FocusedStyle CssClass="focus-text-box-input"></FocusedStyle>
+                                                                <GridViewStyles>
+                                                                    <Header CssClass="gridview-no-header-padding" ForeColor="Black"></Header>
+                                                                </GridViewStyles>
+                                                                <GridViewProperties>
+                                                                    <SettingsBehavior EnableRowHotTrack="True" AllowEllipsisInText="true" AllowDragDrop="false" />
+                                                                    <SettingsPager EnableAdaptivity="true" PageSize="100">
+                                                                        <Summary Visible="true" Text="Vseh zapisov : {2}" EmptyText="Ni zapisov" />
+                                                                    </SettingsPager>
+                                                                    <Settings ShowFilterRow="false" ShowFilterRowMenu="false" ShowVerticalScrollBar="True"
+                                                                        ShowHorizontalScrollBar="true" VerticalScrollableHeight="250"></Settings>
+                                                                </GridViewProperties>
+                                                                <SettingsAdaptivity Mode="OnWindowInnerWidth" ModalDropDownCaption="Osebe" SwitchToModalAtWindowInnerWidth="650" />
+                                                                <Columns>
 
-                                                            <dx:GridViewDataTextColumn Caption="Naziv" FieldName="NazivPrvi"
-                                                                ReadOnly="true" MinWidth="230" MaxWidth="400" Width="100%">
-                                                                <Settings ShowFilterRowMenu="False" />
-                                                            </dx:GridViewDataTextColumn>
+                                                                    <dx:GridViewDataTextColumn Caption="Naziv" FieldName="NazivPrvi"
+                                                                        ReadOnly="true" MinWidth="230" MaxWidth="400" Width="100%">
+                                                                        <Settings ShowFilterRowMenu="False" />
+                                                                    </dx:GridViewDataTextColumn>
 
-                                                            <dx:GridViewDataTextColumn Caption="Zaloga" FieldName="HasStock"
-                                                                ReadOnly="true" MinWidth="230" MaxWidth="400" Width="20%" Visible="False">
-                                                                <Settings ShowFilterRowMenu="False" />
-                                                            </dx:GridViewDataTextColumn>
+                                                                    <dx:GridViewDataTextColumn Caption="Zaloga" FieldName="HasStock"
+                                                                        ReadOnly="true" MinWidth="230" MaxWidth="400" Width="20%" Visible="False">
+                                                                        <Settings ShowFilterRowMenu="False" />
+                                                                    </dx:GridViewDataTextColumn>
 
-                                                        </Columns>
-                                                    </dx:ASPxGridLookup>
-                                                </div>
-                                                <div class="col-4 p-0 mr-3">
-                                                    <dx:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="false" ClientInstanceName="btnSearch"
-                                                        Height="25" Width="50" UseSubmitBehavior="false" ClientEnabled="true">
-                                                        <Paddings Padding="0" />
-                                                        <Image Url="../../Images/search.png" UrlHottracked="../../Images/searchHover.png" UrlDisabled="../../Images/searchDisabled.png" />
-                                                        <ClientSideEvents Click="btnSearch_Click" />
-                                                    </dx:ASPxButton>
+                                                                    <dx:GridViewDataTextColumn Caption="Prodaja" FieldName="HasProdaja"
+                                                                        ReadOnly="true" MinWidth="230" MaxWidth="400" Width="20%" Visible="False">
+                                                                        <Settings ShowFilterRowMenu="False" />
+                                                                    </dx:GridViewDataTextColumn>
+
+                                                                    <dx:GridViewDataTextColumn Caption="Zaloga" FieldName="StockNumber"
+                                                                        ReadOnly="true" MinWidth="230" MaxWidth="400" Width="30%" Visible="True">
+                                                                        <Settings ShowFilterRowMenu="False" />
+                                                                    </dx:GridViewDataTextColumn>
+
+                                                                </Columns>
+                                                            </dx:ASPxGridLookup>
+                                                        </div>
+                                                        <div class="col-2 px-0 text-center">
+                                                            <dx:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="false" ClientInstanceName="btnSearch"
+                                                                Height="25" Width="50" UseSubmitBehavior="false" ClientEnabled="true">
+                                                                <Paddings Padding="0" />
+                                                                <Image Url="../../Images/search.png" UrlHottracked="../../Images/searchHover.png" UrlDisabled="../../Images/searchDisabled.png" />
+                                                                <ClientSideEvents Click="btnSearch_Click" />
+                                                            </dx:ASPxButton>
+                                                        </div>
+                                                        <div class="col-4 pl-0">
+                                                            <dx:ASPxButton ID="btnShowAllItems" Text="Prikaži vse artikle za dobavitelja" runat="server" AutoPostBack="false" ClientInstanceName="btnShowAllItemsForSupplier"
+                                                                Height="25" Width="50" UseSubmitBehavior="false" ClientVisible="false">
+                                                                <Paddings Padding="0" />
+                                                                <Image Url="../../Images/suppliers.png" UrlHottracked="../../Images/suppliersHover.png" />
+                                                                <ClientSideEvents Click="btnShowAllItemsForSupplier_Click" />
+                                                            </dx:ASPxButton>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 mb-2 mb-lg-0 text-right">
+
+                                        <div class="col-lg-4 mb-2 mb-lg-0 text-right">
                                             <dx:ASPxButton ID="btnRefreshTreeList" runat="server" Text="<i class='fas fa-sync'></i> Osveži" AutoPostBack="false"
                                                 Height="25" Width="110" UseSubmitBehavior="false" ClientVisible="false" ClientInstanceName="btnRefreshTreeList" EncodeHtml="false">
                                                 <Paddings PaddingLeft="10" PaddingRight="10" />
@@ -539,14 +612,45 @@
                                                 <div class="col-0 p-0 mr-3">
                                                     <dx:ASPxLabel ID="ASPxLabel1" runat="server" Text="DOBAVITELJ : " Font-Size="12px"></dx:ASPxLabel>
                                                 </div>
-                                                <div class="col p-0 mr-3">
+                                                <div class="col-6 p-0 mr-3">
                                                     <dx:ASPxTextBox runat="server" ID="txtSupplier" ClientInstanceName="txtSupplier"
                                                         CssClass="text-box-input" Font-Size="13px" Width="100%" MaxLength="250" AutoCompleteType="Disabled"
-                                                        Font-Bold="true" ClientEnabled="false" BackColor="LightGray">
+                                                        Font-Bold="true" ClientEnabled="false" BackColor="LightGray" ClientVisible="false">
                                                         <FocusedStyle CssClass="focus-text-box-input"></FocusedStyle>
                                                     </dx:ASPxTextBox>
-                                                </div>
+                                                    <dx:ASPxGridLookup ID="GridLookupSupplierAlter" runat="server" ClientInstanceName="lookUpSupplierAlter"
+                                                        KeyFieldName="TempID" TextFormatString="{0}" CssClass="text-box-input" ClientVisible="false"
+                                                        Paddings-PaddingTop="0" Paddings-PaddingBottom="0" Width="100%" Font-Size="13px"
+                                                        OnLoad="ASPxGridLookupLoad_WidthMedium" OnDataBinding="GridLookupSupplierAlter_DataBinding" IncrementalFilteringMode="Contains">
+                                                        <ClearButton DisplayMode="OnHover" />
+                                                        <FocusedStyle CssClass="focus-text-box-input"></FocusedStyle>
+                                                        <GridViewStyles>
+                                                            <Header CssClass="gridview-no-header-padding" ForeColor="Black"></Header>
+                                                        </GridViewStyles>
+                                                        <GridViewProperties>
+                                                            <SettingsBehavior EnableRowHotTrack="True" AllowEllipsisInText="true" AllowDragDrop="false" />
+                                                            <SettingsPager EnableAdaptivity="true" PageSize="100">
+                                                                <Summary Visible="true" Text="Vseh zapisov : {2}" EmptyText="Ni zapisov" />
+                                                            </SettingsPager>
+                                                            <Settings ShowFilterRow="false" ShowFilterRowMenu="false" ShowVerticalScrollBar="True"
+                                                                ShowHorizontalScrollBar="true" VerticalScrollableHeight="250"></Settings>
+                                                        </GridViewProperties>
+                                                        <SettingsAdaptivity Mode="OnWindowInnerWidth" ModalDropDownCaption="Osebe" SwitchToModalAtWindowInnerWidth="650" />
+                                                        <Columns>
+
+                                                            <dx:GridViewDataTextColumn Caption="Naziv" FieldName="NazivPrvi"
+                                                                ReadOnly="true" MinWidth="230" MaxWidth="400" Width="90%">
+                                                                <Settings ShowFilterRowMenu="False" />
+                                                            </dx:GridViewDataTextColumn>
+                                                             <dx:GridViewDataTextColumn Caption="Zad.Nar." FieldName="LastSupplier"
+                                                                ReadOnly="true" MinWidth="230" MaxWidth="400" Width="10%">
+                                                                <Settings ShowFilterRowMenu="False" />
+                                                            </dx:GridViewDataTextColumn>
+                                                        </Columns>
+                                                    </dx:ASPxGridLookup>
+                                                </div>                                              
                                             </div>
+
                                         </div>
                                     </div>
 
@@ -655,20 +759,30 @@
 
                                                 <Columns>
                                                     <dx:GridViewCommandColumn Caption="Briši" ShowDeleteButton="true" Width="8%" VisibleIndex="0" />
-                                                    <dx:GridViewDataTextColumn Caption="Kategorija" FieldName="KategorijaNaziv" AdaptivePriority="2" MinWidth="100" MaxWidth="180" Width="12%" EditFormSettings-Visible="False" />
-                                                    <dx:GridViewDataTextColumn Caption="Ident Pantheon" FieldName="IdentArtikla_P" AdaptivePriority="2" MinWidth="130" MaxWidth="200" Width="20%" EditFormSettings-Visible="False" SortOrder="Descending" />
+                                                    <dx:GridViewDataTextColumn Caption="Kategorija" FieldName="KategorijaNaziv" AdaptivePriority="2" MinWidth="100" MaxWidth="180" Width="8%" EditFormSettings-Visible="False" />
+                                                    <dx:GridViewDataTextColumn Caption="Ident Pantheon" FieldName="IdentArtikla_P" AdaptivePriority="2" MinWidth="130" MaxWidth="200" Width="10%" EditFormSettings-Visible="False" />
                                                     <dx:GridViewDataTextColumn Caption="Naziv" FieldName="NazivArtikla" AdaptivePriority="1" MinWidth="150" MaxWidth="350" Width="30%" EditFormSettings-Visible="False" />
-                                                    <dx:GridViewDataTextColumn Caption="Količina" FieldName="Kolicina" AdaptivePriority="1" MinWidth="100" MaxWidth="180" Width="12%">
+                                                    <dx:GridViewDataTextColumn Caption="Količina" FieldName="Kolicina" AdaptivePriority="1" MinWidth="100" MaxWidth="180" Width="10%">
                                                         <PropertiesTextEdit>
                                                             <ValidationSettings>
                                                                 <RegularExpression ErrorText="Vnesi število" ValidationExpression="^\d+([.,]\d{1,9})?$" />
                                                             </ValidationSettings>
                                                         </PropertiesTextEdit>
                                                     </dx:GridViewDataTextColumn>
+                                                    <dx:GridViewDataTextColumn Caption="EM" FieldName="EMvKG" AdaptivePriority="1" Width="5%" EditFormSettings-Visible="False" />
+                                                     <dx:GridViewDataTextColumn Caption="Kol.Pol" FieldName="KolicinaPol" AdaptivePriority="1" MinWidth="100" MaxWidth="180" Width="5%">
+                                                        <PropertiesTextEdit>
+                                                            <ValidationSettings>
+                                                                <RegularExpression ErrorText="Vnesi število" ValidationExpression="^\d+([.,]\d{1,9})?$" />
+                                                            </ValidationSettings>
+                                                        </PropertiesTextEdit>
+                                                    </dx:GridViewDataTextColumn>
+                                                    <dx:GridViewDataTextColumn Caption="Pol" FieldName="EMvPol" AdaptivePriority="1" Width="5%" EditFormSettings-Visible="False" />
                                                     <dx:GridViewDataTextColumn Caption="Opomba" FieldName="Opombe" AdaptivePriority="1" MinWidth="150" MaxWidth="400" Width="20%" />
-                                                    <dx:GridViewDataTextColumn FieldName="VsotaZalNarRazlikaOpt" Caption="Z + N - O" AdaptivePriority="1" MinWidth="100" MaxWidth="180" Width="12%"
+                                                    <dx:GridViewDataTextColumn FieldName="VsotaZalNarRazlikaOpt" Caption="Z + N - O" AdaptivePriority="1" MinWidth="100" MaxWidth="180" Width="8%"
                                                         PropertiesTextEdit-DisplayFormatString="N2" />
                                                 </Columns>
+                                                <SettingsResizing ColumnResizeMode="NextColumn" Visualization="Live" />
                                                 <TotalSummary>
                                                     <dx:ASPxSummaryItem DisplayFormat="Vsota: {0:n2}" FieldName="Kolicina" SummaryType="Sum" />
                                                 </TotalSummary>

@@ -5,7 +5,7 @@
 
 <%@ MasterType VirtualPath="~/Popup.Master" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContentHolderPopup" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
         
         var postbackInitiated = false;
@@ -23,7 +23,7 @@
 
     </script>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContentPlaceHolderPopup" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolderMain" runat="server">
     <div class="row m-0 pb-3">
         <div class="col-lg-12 mb-2 p-0">
             <div class="row m-0 align-items-center">
