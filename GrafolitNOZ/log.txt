@@ -466,3 +466,23 @@ System
 31. 07. 2020 08:18:47 After Authenticate
 31. 07. 2020 08:37:05 The request was aborted: The operation has timed out. System
 31. 07. 2020 08:43:52 The operation has timed out System
+28. 08. 2020 15:53:10 Repository failed to save dataAn error occurred while updating the entries. See the inner exception for details.An error occurred while updating the entries. See the inner exception for details.The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Employee_OsebaID". The conflict occurred in database "GrafolitNOZ", table "dbo.Osebe_NOZ", column OsebaID.The statement has been terminated.
+8. 09. 2020 11:30:28 The operation has timed out System
+8. 09. 2020 11:47:40 The request was aborted: The operation has timed out. System
+8. 09. 2020 11:59:23 The request was aborted: The operation has timed out. System
+8. 09. 2020 13:48:04 The operation has timed out System
+8. 09. 2020 13:49:44 The request was aborted: The operation has timed out. System
+9. 09. 2020 09:34:47 Before Authenticate
+9. 09. 2020 09:34:47 Before SignIn
+9. 09. 2020 09:34:48 After SignIn
+9. 09. 2020 09:34:48 Napačna prijava! Ponovno vnesi geslo in uporabniško ime!
+
+9. 09. 2020 09:34:48 
+9. 09. 2020 09:34:48 Napačna prijava! Ponovno vnesi geslo in uporabniško ime!
+ 
+9. 09. 2020 09:34:56 Before Authenticate
+9. 09. 2020 09:34:56 Before SignIn
+9. 09. 2020 09:34:56 After SignIn
+9. 09. 2020 09:34:56 After Authenticate
+9. 09. 2020 09:39:43 The operation has timed out System
+9. 09. 2020 09:54:28 The request was aborted: The operation has timed out. System

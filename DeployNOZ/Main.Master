@@ -67,7 +67,7 @@
                 if (currentDate.getTime() > newDate.getTime())
                     window.location.replace(location.origin + "/Home.aspx");
 
-            }, 30000);//30 sec            
+            }, 30000000);//30 sec            
         });
 
         function addMinutes(date, minutes) {

@@ -97,7 +97,7 @@ namespace GrafolitNOZ.Pages.OptimalStockOrder
                 {
                     string sNameMainProduct = mainProduct.Name.Substring(0, iIndex1);
 
-                    var filteredProduct = mainProduct.Product.ChildProducts.Where(cp => cp.DOBAVITELJ == mainProduct.Product.DOBAVITELJ && cp.NAZIV != sNameMainProduct).ToList();
+                    var filteredProduct = mainProduct.Product.ChildProducts.Where(cp => cp.DOBAVITELJ.Contains(mainProduct.Product.DOBAVITELJ) && cp.NAZIV != sNameMainProduct).ToList();
                     (sender as ASPxGridView).DataSource = filteredProduct;
                 }
             }
